@@ -7,7 +7,6 @@
 
 
 .login-hero {
-    background-image: url("{{ asset('images/bodega.png') }}");
     background-size: cover;
     background-position: center;
     position: relative;

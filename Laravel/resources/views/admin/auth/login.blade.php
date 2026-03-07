@@ -11,7 +11,7 @@
 <body>
 
     <div class="layout-two-columns">
-        <div class="login-hero">
+        <div class="login-hero" style="background-image: url('{{ asset('images/bodega.png') }}'); background-size: cover; background-position: center;">
             <div class="login-hero-content">
                 <div class="hero-logo">
                     <div class="hero-logo__icon">M</div>
