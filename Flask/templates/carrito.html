@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MACUIN - Tu Carrito</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Estilos propios -->
+    <link rel="stylesheet" href="/static/css/carrito.css">
+</head>
+
+<body>
+
+    <!-- ── NAVBAR ── -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="/">MAC<span>UIN</span></a>
+            <button class="navbar-toggler border-0" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                style="color: var(--gray-light);">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center gap-3">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/catalogo">
+                            <i class="bi bi-grid-3x3-gap"></i> Catálogo
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/carrito">
+                            <i class="bi bi-cart"></i> Carrito
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pedidos">
+                            <i class="bi bi-box-seam"></i> Mis Pedidos
+                        </a>
+                    </li>
+                    <li class="nav-item ms-lg-2">
+                        <div class="user-pill">
+                            <i class="bi bi-person-circle" style="color: var(--blue-accent); font-size: 1.1rem;"></i>
+                            <span>Cliente</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ── MAIN ── -->
+    <main>
+        <div class="container">
+            <h1 class="page-title">Tu Carrito</h1>
+            <p class="page-subtitle">2 productos seleccionados</p>
+
+            <div class="row g-4 align-items-start">
+
+                <!-- Artículos -->
+                <div class="col-lg-8">
+                    <div class="cart-card">
+                        <div class="cart-card-header">
+                            <h6>Artículos</h6>
+                            <span class="item-count-badge">2 items</span>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="ps-4">Producto</th>
+                                        <th>Precio</th>
+                                        <th class="text-center">Cantidad</th>
+                                        <th class="text-end">Subtotal</th>
+                                        <th class="pe-4"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Producto 1 -->
+                                    <tr>
+                                        <td class="ps-4">
+                                            <div class="d-flex align-items-center gap-3">
+                                                <img src="/static/img/filtro_aceite.jpg" class="product-img"
+                                                    alt="Filtro de Aceite Premium"
+                                                    onerror="this.src='https://via.placeholder.com/56/111a3a/3974E0?text=FA'">
+                                                <div>
+                                                    <div class="product-name">Filtro de Aceite Premium</div>
+                                                    <div class="product-brand">Bosch</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="price-col">$350</td>
+                                        <td class="text-center">
+                                            <div class="qty-wrapper mx-auto">
+                                                <button class="qty-btn">−</button>
+                                                <input type="number" class="input-qty" value="2" min="1">
+                                                <button class="qty-btn">+</button>
+                                            </div>
+                                        </td>
+                                        <td class="text-end subtotal-col">$700</td>
+                                        <td class="pe-4 text-end">
+                                            <a href="#" class="trash-icon"><i class="bi bi-trash3"></i></a>
+                                        </td>
+                                    </tr>
+                                    <!-- Producto 2 -->
+                                    <tr>
+                                        <td class="ps-4">
+                                            <div class="d-flex align-items-center gap-3">
+                                                <img src="/static/img/Frenos.jpg" class="product-img"
+                                                    alt="Frenos de Disco Delanteros"
+                                                    onerror="this.src='https://via.placeholder.com/56/111a3a/3974E0?text=FD'">
+                                                <div>
+                                                    <div class="product-name">Frenos de Disco Delanteros</div>
+                                                    <div class="product-brand">Brembo</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="price-col">$1,299</td>
+                                        <td class="text-center">
+                                            <div class="qty-wrapper mx-auto">
+                                                <button class="qty-btn">−</button>
+                                                <input type="number" class="input-qty" value="1" min="1">
+                                                <button class="qty-btn">+</button>
+                                            </div>
+                                        </td>
+                                        <td class="text-end subtotal-col">$2,999</td>
+                                        <td class="pe-4 text-end">
+                                            <a href="#" class="trash-icon"><i class="bi bi-trash3"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resumen -->
+                <div class="col-lg-4">
+                    <div class="summary-card">
+                        <div class="summary-title">Resumen del pedido</div>
+                        <hr class="summary-divider">
+
+                        <div class="summary-row mt-2">
+                            <span class="label">Subtotal (2 items)</span>
+                            <span class="value">$1,999</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="label">Envío estimado</span>
+                            <span class="value free">
+                                <i class="bi bi-check-circle-fill me-1"></i>Gratis
+                            </span>
+                        </div>
+
+                        <hr class="summary-divider mt-2">
+
+                        <div class="summary-total-row">
+                            <span class="summary-total-label">Total</span>
+                            <span class="summary-total-value">$1,999</span>
+                        </div>
+
+                        <button class="btn-checkout" data-bs-toggle="modal" data-bs-target="#pagoModal">
+                    
+                        </button>
+
+                        <p class="security-note">
+                            <i class="bi bi-shield-check" style="color: var(--blue-accent);"></i>
+                            Pago  seguro y cifrado
+                        </p>
+                    </div>
+                </div>
+
+            </div><!-- /row -->
+        </div><!-- /container -->
+    </main>
+
+
+    <!-- ── FOOTER ── -->
+    <footer>
+        <div class="container text-center">
+            <span>© 2026 MACUIN — Todos los derechos reservados</span>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Scripts propios -->
+    <script src="carrito.js"></script>
+
+</body>
+</html>

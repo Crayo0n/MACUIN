@@ -1,0 +1,264 @@
+:root {
+    --navy-deep:    #010B26;
+    --navy-dark:    #091E57;
+    --navy-mid:     #0D3A8D;
+    --blue-accent:  #3974E0;
+    --gray-mid:     #6C6C6C;
+    --gray-light:   #AAADB6;
+    --navy-surface: #111a3a;
+    --navy-card:    #2c3a6b;
+    --glow: rgba(57, 116, 224, 0.18);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--navy-deep);
+    font-family: 'Inter', sans-serif;
+    color: #e8eaf0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ── NAVBAR ── */
+.navbar {
+    background-color: rgba(9, 30, 87, 0.85) !important;
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(57,116,224,0.2) !important;
+}
+
+.navbar-brand {
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: 3px;
+    color: #fff !important;
+}
+
+.nav-link {
+    color: var(--gray-light) !important;
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nav-link.active,
+.nav-link:hover {
+    color: #fff !important;
+}
+
+.nav-link.active i {
+    color: var(--blue-accent);
+}
+
+.user-pill {
+    background: rgba(57,116,224,0.12);
+    border: 1px solid rgba(57,116,224,0.3);
+    border-radius: 100px;
+    padding: 6px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.user-pill:hover {
+    background: rgba(57,116,224,0.22);
+    border-color: rgba(57,116,224,0.55);
+}
+
+.user-pill span {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #e8eaf0;
+}
+
+/* ── MAIN ── */
+main {
+    flex: 1;
+    padding: 2rem 0 4rem;
+}
+
+h1, h5, h6 {
+    color: #fff !important;
+}
+
+.text-muted {
+    color: var(--gray-light) !important;
+}
+
+/* ── PEDIDOS CARD ── */
+.card {
+    background: var(--navy-surface) !important;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(1,11,38,0.5);
+    border: none !important;
+    color: #e8eaf0;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.badge-delivered {
+    background: var(--blue-accent);
+    color: #fff;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.badge-shipped {
+    background: rgba(57,116,224,0.35);
+    color: #fff;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.card .bg-light {
+    background: var(--navy-card) !important;
+    color: #e8eaf0 !important;
+}
+
+.btn-primary,
+.btn-outline-primary {
+    background: linear-gradient(135deg, var(--blue-accent) 0%, var(--navy-mid) 100%);
+    border: none;
+    color: #fff;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover,
+.btn-outline-primary:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+/* ── TRACKER ── */
+.tracker-wrapper {
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.tracker-line-base {
+    position: absolute;
+    top: 0;
+    left: 12px;
+    width: 4px;
+    height: 100%;
+    background: rgba(255,255,255,0.1);
+    border-radius: 2px;
+    z-index: 1;
+}
+
+.tracker-icon-completed,
+.tracker-icon-current,
+.tracker-icon-success {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.tracker-icon-completed {
+    background: var(--blue-accent);
+    color: #fff;
+}
+
+.tracker-icon-current {
+    background: var(--navy-mid);
+    color: #fff;
+}
+
+.tracker-icon-success {
+    background: #4ecb8d;
+}
+
+/* ── MODAL ── */
+.modal-content {
+    background: var(--navy-surface);
+    border-radius: 18px;
+    color: #e8eaf0;
+    border: 1px solid rgba(57,116,224,0.3);
+}
+
+.modal-header,
+.modal-body {
+    padding: 1.5rem;
+}
+
+.modal-title {
+    color: #fff;
+}
+
+.btn-close {
+    filter: invert(1) opacity(0.5);
+}
+
+.btn-close:hover {
+    filter: invert(1) opacity(0.9);
+}
+
+.btn-outline-danger {
+    border-color: rgba(255, 92, 92, 0.8);
+    color: #e05c5c;
+}
+
+.btn-outline-danger:hover {
+    background: rgba(224, 92, 92, 0.1);
+    color: #e05c5c;
+}
+
+/* ── PRODUCTOS DENTRO DE MODAL ── */
+.modal .card {
+    background: var(--navy-card);
+}
+
+.modal .card img {
+    border-radius: 8px;
+    border: 1px solid rgba(57,116,224,0.2);
+}
+
+/* ── FOOTER ── */
+footer {
+    background: rgba(9,30,87,0.6);
+    border-top: 1px solid rgba(57,116,224,0.15);
+    padding: 1.2rem 0;
+}
+
+footer span {
+    font-size: 0.8rem;
+    color: var(--gray-mid);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 991px) {
+    .card-body {
+        padding: 1.5rem;
+    }
+    .tracker-wrapper {
+        padding-left: 0.5rem;
+    }
+}
