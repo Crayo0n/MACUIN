@@ -1,0 +1,16 @@
+services:
+  laravel:
+    build: ./Laravel
+    container_name: macuin_laravel
+    ports:
+      - "8000:80"
+    volumes:
+      - ./Laravel:/var/www/html
+
+  flask:
+    build: ./Flask
+    container_name: server_flask
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./Flask:/app
