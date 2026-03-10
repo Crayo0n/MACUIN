@@ -12,54 +12,19 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/static/css/catalogo.css">
+    <link rel="stylesheet" href="/Flask/static/css/Catalogo.css">
 </head>
 
 <body class="bg-light">
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom py-3">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="/" style="color: #091E57; letter-spacing: 0.5px;">MACUIN</a>
-            <button class="navbar-toggler border-0 focus-ring focus-ring-light" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-center gap-2">
-                    <li class="nav-item">
-                        <a class="nav-link text-muted d-flex align-items-center gap-1 active fw-medium text-dark"
-                            href="/catalogo">
-                            <i class="bi bi-grid-3x3-gap"></i> Catálogo
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-muted d-flex align-items-center gap-1" href="/carrito">
-                            <i class="bi bi-cart"></i> Carrito
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-muted d-flex align-items-center gap-1" href="/pedidos">
-                            <i class="bi bi-box-seam"></i> Pedidos
-                        </a>
-                    </li>
-                    <li class="nav-item ms-lg-3">
-                        <div class="d-flex align-items-center bg-light rounded-pill px-3 py-1 border"
-                            style="cursor: pointer;">
-                            <i class="bi bi-person-circle fs-5 text-primary me-2"></i>
-                            <span class="fw-medium text-dark small">Perfill</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+   
+   
 
     <!-- Contenido principal -->
     <main class="container py-5">
         <h1 class="fw-bold mb-2 fs-2 text-dark">Catálogo de Autopartes</h1>
-        <p class="text-muted mb-4 fs-6">Calidad de autopartes para tu vehículo</p>
+        <p class="text-muted mb-4 fs-6">Encuentra las mejores autopartes para tu vehículo</p>
 
-       
+        <!-- Barra de búsqueda y filtros -->
         <div class="row g-3 mb-4">
             <div class="col-md-6">
                 <div class="input-group search-group">
@@ -89,20 +54,21 @@
 
         <p class="text-muted mb-4 small">Mostrando 9 de 9 productos</p>
 
-    
+        <!-- Grid de productos -->
         <div class="row g-4">
             <!-- Producto 1 -->
             <div class="col-md-4">
                 <div class="product-card card h-100 border p-4 bg-white">
                     <div class="d-flex gap-2 mb-3">
-                        <span class="badge badge-stock">09 disponibles</span>
-                        <span class="badge badge-category">Bandas</span>
+                        <span class="badge badge-stock">15 disponibles</span>
+                        <span class="badge badge-category">frenos</span>
                     </div>
-                    <h5 class="card-title fw-bold mb-1 fs-5 text-dark">Banda modelo 1</h5>
-                    <p class="brand-text fw-medium small mb-3">Marca</p>
-                    <p class="card-text small text-muted mb-4 line-clamp">Banda modelo 2</p>
+                    <h5 class="card-title fw-bold mb-1 fs-5 text-dark">Frenos de Disco Delanteros</h5>
+                    <p class="brand-text fw-medium small mb-3">Brembo</p>
+                    <p class="card-text small text-muted mb-4 line-clamp">Frenos de disco de alta calidad para mayor
+                        seguridad y rendimiento. Compatible con la mayoría...</p>
                     <div class="d-flex justify-content-between align-items-center mt-auto">
-                        <span class="fw-bold fs-4 text-dark">$1,099</span>
+                        <span class="fw-bold fs-4 text-dark">$1,299</span>
                         <a href="/producto/1" class="btn btn-outline-primary btn-sm px-3 py-1">Ver detalles</a>
                     </div>
                     <!-- The requested image block matching user instructions -->
@@ -116,14 +82,15 @@
             <div class="col-md-4">
                 <div class="product-card card h-100 border p-4 bg-white">
                     <div class="d-flex gap-2 mb-3">
-                        <span class="badge badge-stock">10 disponibles</span>
+                        <span class="badge badge-stock">45 disponibles</span>
                         <span class="badge badge-category">filtros</span>
                     </div>
-                    <h5 class="card-title fw-bold mb-1 fs-5 text-dark">Filtro  Premium</h5>
+                    <h5 class="card-title fw-bold mb-1 fs-5 text-dark">Filtro de Aceite Premium</h5>
                     <p class="brand-text fw-medium small mb-3">Bosch</p>
-                    <p class="card-text small text-muted mb-4 line-clamp">Filtro de aceite de alta eficiencia q</p>
+                    <p class="card-text small text-muted mb-4 line-clamp">Filtro de aceite de alta eficiencia que
+                        protege el motor contra impurezas y prolonga su vida útil.</p>
                     <div class="d-flex justify-content-between align-items-center mt-auto">
-                        <span class="fw-bold fs-4 text-dark">$200</span>
+                        <span class="fw-bold fs-4 text-dark">$350</span>
                         <a href="/producto/2" class="btn btn-outline-primary btn-sm px-3 py-1">Ver detalles</a>
                     </div>
                     <div class="product-image-container mt-3 pt-3 border-top">
@@ -141,13 +108,14 @@
                     </div>
                     <h5 class="card-title fw-bold mb-1 fs-5 text-dark">Batería 12V 75Ah</h5>
                     <p class="brand-text fw-medium small mb-3">LTH</p>
-                    <p class="card-text small text-muted mb-4 line-clamp">Batería </p>
+                    <p class="card-text small text-muted mb-4 line-clamp">Batería de arranque libre de mantenimiento con
+                        tecnología de calcio que garantiza mayor...</p>
                     <div class="d-flex justify-content-between align-items-center mt-auto">
-                        <span class="fw-bold fs-4 text-dark">$2,850</span>
+                        <span class="fw-bold fs-4 text-dark">$1,850</span>
                         <a href="/producto/3" class="btn btn-outline-primary btn-sm px-3 py-1">Ver detalles</a>
                     </div>
                     <div class="product-image-container mt-3 pt-3 border-top">
-                        <img src="" alt="Batería"
+                        <img src="/static/img/BATERIA-KAISE.png" alt="Batería"
                             class="img-fluid rounded object-fit-contain" style="height: 120px; width: 100%;">
                     </div>
                 </div>
@@ -162,6 +130,7 @@
         </div>
     </footer>
 
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/static/js/catalogo.js"></script>
 </body>
