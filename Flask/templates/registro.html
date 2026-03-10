@@ -1,56 +1,66 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Registrarse</title>
-<link rel="stylesheet" href="/static/css/registro.css">
-<link rel="stylesheet" href="/static/css/variables.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MACUIN - Registro de Usuario</title>
+    <link rel="stylesheet" href="/Flask/static/css/Registro.css">
 </head>
+<body class="reg-body">
 
-<body>
-
-<div class="container">
-
-    <div class="left-panel">
-        <a href="#" class="back">← Volver</a>
-    </div>
-
-    <div class="form-panel">
-
-        <div class="form-card">
-
-            <h2>Crea una cuenta</h2>
-
-            <form>
-
-                <label>Nombre</label>
-                <input type="text" placeholder="Nombre Completo">
-
-                <label>Email</label>
-                <input type="email" placeholder="usuario@ejemplo.com">
-
-                <label>Confirma Email</label>
-                <input type="email" placeholder="usuario@ejemplo.com">
-
-                <label>Contraseña</label>
-                <input type="password" placeholder="********">
-
-                <div class="terms">
-                    <input type="checkbox">
-                    <span>He leído y acepto los <b>TÉRMINOS Y CONDICIONES</b></span>
-                </div>
-
-                <button type="submit">Registrarse</button>
-
-            </form>
-
-            <p class="footer">© 2025 MACUIN AutoPartes</p>
-
+    <div class="main-container">
+        <div class="left-panel">
+            <a href="/Flask/templates/Login.html" class="btn-back">
+                <span class="arrow">←</span> Volver al inicio
+            </a>
+            <div class="side-branding">
+                <img src="/Flask/static/images/LOGO.png" alt="Logo" class="mini-logo">
+                <p>Excelencia en el Servicio</p>
+            </div>
         </div>
 
-    </div>
+        <div class="form-panel">
+            <div class="form-card">
+                <div class="card-header-blue">
+                    <h2>Crea una cuenta</h2>
+                </div>
 
-</div>
+                <form class="reg-form">
+                    <div class="input-group">
+                        <label>Nombre Completo</label>
+                        <input type="text" placeholder="Ej. Juan Pérez" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Email Corporativo</label>
+                        <input type="email" placeholder="usuario@macuin.com" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Confirmar Email</label>
+                        <input type="email" placeholder="Repite tu email" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Contraseña</label>
+                        <input type="password" placeholder="••••••••" required>
+                    </div>
+
+                    <div class="terms-container">
+                        <label class="custom-checkbox">
+                            <input type="checkbox" required>
+                            <span class="checkmark"></span>
+                            He leído y acepto los <b>TÉRMINOS Y CONDICIONES</b>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Registrarse</button>
+                </form>
+
+                <p class="reg-footer">© 2026 MACUIN AutoPartes</p>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>
