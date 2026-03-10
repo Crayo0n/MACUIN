@@ -6,7 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>MACUIN – @yield('title', 'Panel de Control')</title>
 
-    @vite(['resources/css/macuin.css', 'resources/js/app.js'])
+    @vite(['resources/css/macuin.css'])
 
     @stack('styles')
 </head>

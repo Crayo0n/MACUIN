@@ -6,6 +6,9 @@ services:
       - "8000:80"
     volumes:
       - ./Laravel:/var/www/html
+      - /var/www/html/vendor
+      - /var/www/html/node_modules
+      - /var/www/html/public/build
 
   flask:
     build: ./Flask
