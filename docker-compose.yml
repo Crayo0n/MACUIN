@@ -17,3 +17,5 @@ services:
       - "5000:5000"
     volumes:
       - ./Flask:/app
+    environment:
+      - FLASK_DEBUG=1

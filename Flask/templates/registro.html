@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MACUIN - Registro de Usuario</title>
-    <link rel="stylesheet" href="/Flask/static/css/Registro.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Login.css') }}">
 </head>
 <body class="reg-body">
 
     <div class="main-container">
         <div class="left-panel">
-            <a href="/Flask/templates/Login.html" class="btn-back">
+            <a href="/templates/Login.html" class="btn-back">
                 <span class="arrow">←</span> Volver al inicio
             </a>
             <div class="side-branding">
