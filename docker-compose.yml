@@ -19,3 +19,14 @@ services:
       - ./Flask:/app
     environment:
       - FLASK_DEBUG=1
+
+  fastapi_app:
+    build: ./miAPI
+    container_name: macuin_fastapi
+    ports:
+      - "5001:5000"
+    volumes:
+      - ./miAPI:/app
+    environment:
+      - API_PORT=5000
+    command: uvicorn app.main:app --host 0.0.0.0 --port 5000 --reload
