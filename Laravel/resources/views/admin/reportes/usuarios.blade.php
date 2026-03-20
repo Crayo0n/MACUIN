@@ -72,39 +72,42 @@
         </div>
     </div>
 
-    <div class="table-report-card">
-        <div style="background: var(--color-card-head); padding: 20px; font-family: var(--font-display); font-size: 18px; border-bottom: 1px solid var(--color-border);">
-            Vista Previa del Informe: Clientes
-        </div>
-        <table class="report-table" style="width: 100%; border-collapse: collapse;">
-            <thead>
-                <tr>
-                    <th style="padding: 20px; text-align: left; font-family: var(--font-display); font-size: 13px; color: var(--color-muted); border-bottom: 1px solid var(--color-border);">ID</th>
-                    <th style="padding: 20px; text-align: left; font-family: var(--font-display); font-size: 13px; color: var(--color-muted); border-bottom: 1px solid var(--color-border);">Email</th>
-                    <th style="padding: 20px; text-align: left; font-family: var(--font-display); font-size: 13px; color: var(--color-muted); border-bottom: 1px solid var(--color-border);">Nombre</th>
-                    <th style="padding: 20px; text-align: left; font-family: var(--font-display); font-size: 13px; color: var(--color-muted); border-bottom: 1px solid var(--color-border);">Fecha de registro</th>
-                    <th style="padding: 20px; text-align: left; font-family: var(--font-display); font-size: 13px; color: var(--color-muted); border-bottom: 1px solid var(--color-border);">Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for ($i = 1; $i <= 5; $i++)
-                <tr>
-                    <td style="padding: 18px 20px; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.05); font-weight: 600;">{{ $i }}</td>
-                    <td style="padding: 18px 20px; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--color-primary); font-weight: 600;">juanperez@gmail.com</td>
-                    <td style="padding: 18px 20px; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.05); font-weight: 600;">Juan Pérez</td>
-                    <td style="padding: 18px 20px; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.05);">14 de Enero de 2026</td>
-                    <td style="padding: 18px 20px; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.05);"><span class="status-pill">ACTIVE</span></td>
-                </tr>
-                @endfor
-            </tbody>
-        </table>
-        
-        <div style="padding: 20px; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.2);">
-            <p style="font-size: 13px; color: var(--color-muted);">Mostrando <span>1 a 5</span> de <span>100</span> resultados</p>
-            <div style="display: flex; gap: 10px;">
-                <button style="background:none; border:none; cursor:pointer; opacity:0.6;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
-                <button style="background:none; border:none; cursor:pointer; opacity:0.6;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2 style="font-family: var(--font-display); font-size: 20px;">Directorio de Clientes</h2>
+        <a href="{{ url('/usuarios/crear') }}" style="background: var(--color-primary); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-family: var(--font-display); font-size: 13px; display: flex; align-items: center; gap: 8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Nuevo Cliente
+        </a>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
+        @php
+            $users = [
+                ['name' => 'Juan Pérez', 'email' => 'juanperez@gmail.com', 'initials' => 'JP', 'date' => '14 Ene, 2026', 'status' => 'ACTIVE', 'color' => 'var(--color-primary)'],
+                ['name' => 'María López', 'email' => 'm.lopez@empresa.com', 'initials' => 'ML', 'date' => '22 Feb, 2026', 'status' => 'ACTIVE', 'color' => '#a855f7'],
+                ['name' => 'Carlos Estrada', 'email' => 'carlos.e@outlook.com', 'initials' => 'CE', 'date' => '05 Mar, 2026', 'status' => 'INACTIVE', 'color' => '#ef4444'],
+                ['name' => 'Ana Martínez', 'email' => 'ana.martinez@gmail.com', 'initials' => 'AM', 'date' => '10 Mar, 2026', 'status' => 'ACTIVE', 'color' => '#22c55e'],
+                ['name' => 'Empresa XYZ', 'email' => 'compras@xyz.com', 'initials' => 'EX', 'date' => '15 Mar, 2026', 'status' => 'PENDING', 'color' => '#eab308']
+            ];
+        @endphp
+
+        @foreach($users as $user)
+        <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--color-border); border-radius: 16px; padding: 30px 25px; text-align: center; position: relative; transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.borderColor='{{ $user['color'] }}'; this.style.transform='translateY(-3px)';" onmouseout="this.style.borderColor='var(--color-border)'; this.style.transform='translateY(0)';">
+            <span class="status-pill" style="position: absolute; top: 20px; right: 20px; font-weight: bold; background: {{ $user['status'] == 'ACTIVE' ? 'rgba(34,197,94,0.1)' : ($user['status'] == 'INACTIVE' ? 'rgba(239,68,68,0.1)' : 'rgba(234,179,8,0.1)') }}; color: {{ $user['status'] == 'ACTIVE' ? '#22c55e' : ($user['status'] == 'INACTIVE' ? '#ef4444' : '#eab308') }}; border: none; padding: 6px 12px; letter-spacing: 0.5px;">{{ $user['status'] }}</span>
+            
+            <div style="width: 75px; height: 75px; background: {{ str_replace(')', ', 0.1)', str_replace('var(--color-primary)', 'rgba(57,116,224', $user['color'])) }}; color: {{ $user['color'] }}; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 26px; font-weight: bold; font-family: var(--font-display); margin: 0 auto 15px;">
+                {{ $user['initials'] }}
+            </div>
+            
+            <h3 style="font-family: var(--font-display); font-size: 19px; margin-bottom: 6px; color: #fff;">{{ $user['name'] }}</h3>
+            <p style="font-size: 13px; color: {{ $user['color'] }}; margin-bottom: 15px; font-weight: 500;">{{ $user['email'] }}</p>
+            <p style="font-size: 12px; color: var(--color-muted); margin-bottom: 25px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px; margin-right:4px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> Registrado el {{ $user['date'] }}</p>
+            
+            <div style="display: flex; gap: 10px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.05);">
+                <button style="flex: 1; background: rgba(255,255,255,0.05); border: none; padding: 10px; border-radius: 8px; color: #fff; cursor: pointer; font-size: 12px; font-family: var(--font-display); transition: 0.2s;">PERFIL</button>
+                <button style="flex: 1; background: rgba(57,116,224,0.1); border: 1px solid rgba(57,116,224,0.3); padding: 10px; border-radius: 8px; color: var(--color-primary); cursor: pointer; font-size: 12px; font-family: var(--font-display); transition: 0.2s;">MENSAJE</button>
             </div>
         </div>
+        @endforeach
     </div>
 @endsection

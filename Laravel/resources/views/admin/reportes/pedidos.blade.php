@@ -74,39 +74,70 @@
         </div>
     </div>
 
-    <div class="table-report-card">
-        <div style="background: var(--color-card-head); padding: 20px; font-family: var(--font-display); font-size: 18px; border-bottom: 1px solid var(--color-border);">
-            Vista Previa: Pedidos Recientes
-        </div>
-        <table class="report-table" style="width: 100%; border-collapse: collapse;">
-            <thead>
-                <tr>
-                    <th style="padding: 20px; text-align: left; font-family: var(--font-display); font-size: 13px; color: var(--color-muted); border-bottom: 1px solid var(--color-border);">Orden ID</th>
-                    <th style="padding: 20px; text-align: left; font-family: var(--font-display); font-size: 13px; color: var(--color-muted); border-bottom: 1px solid var(--color-border);">Fecha</th>
-                    <th style="padding: 20px; text-align: left; font-family: var(--font-display); font-size: 13px; color: var(--color-muted); border-bottom: 1px solid var(--color-border);">Cliente</th>
-                    <th style="padding: 20px; text-align: left; font-family: var(--font-display); font-size: 13px; color: var(--color-muted); border-bottom: 1px solid var(--color-border);">Pedido</th>
-                    <th style="padding: 20px; text-align: left; font-family: var(--font-display); font-size: 13px; color: var(--color-muted); border-bottom: 1px solid var(--color-border);">Status</th>
-                    <th style="padding: 20px; text-align: left; font-family: var(--font-display); font-size: 13px; color: var(--color-muted); border-bottom: 1px solid var(--color-border);">Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td style="padding: 18px 20px; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.05); color:var(--color-primary); font-weight:600;">#ORD-2938</td>
-                    <td style="padding: 18px 20px; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.05);">Enero 12, 2026</td>
-                    <td style="padding: 18px 20px; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.05); font-weight:600;">Juan Pérez</td>
-                    <td style="padding: 18px 20px; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.05);">Aceite de motor (x2)</td>
-                    <td style="padding: 18px 20px; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.05);"><span class="status-tag status--entregado">Entregado</span></td>
-                    <td style="padding: 18px 20px; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.05); font-weight:600;">$450.00</td>
-                </tr>
-            </tbody>
-        </table>
-        
-        <div style="padding: 20px; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.2);">
-            <p style="font-size: 13px; color: var(--color-muted);">Mostrando <span>1 a 5</span> de <span>100</span> resultados</p>
-            <div style="display: flex; gap: 10px;">
-                <button style="background:none; border:none; cursor:pointer; opacity:0.6;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
-                <button style="background:none; border:none; cursor:pointer; opacity:0.6;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+    <div class="ticket-list" style="display: flex; flex-direction: column; gap: 15px;">
+        <!-- Ticket 1 -->
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--color-border); border-radius: 12px; padding: 20px; display: flex; justify-content: space-between; align-items: center; transition: 0.2s;">
+            <div style="display: flex; gap: 20px; align-items: center;">
+                <div style="width: 50px; height: 50px; background: rgba(34, 197, 94, 0.1); color: #22c55e; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                </div>
+                <div>
+                    <p style="font-family: var(--font-display); font-size: 16px; font-weight: bold; color: #fff; margin-bottom: 4px;">#ORD-2938 <span style="font-size: 13px; color: var(--color-muted); font-weight: normal; margin-left: 10px;">Por: <strong>Juan Pérez</strong></span></p>
+                    <p style="font-size: 13px; color: var(--color-muted);">Aceite de motor sintético 5W-30 (x2) • <span style="color:#aaa;">Procesado el 12 Ene, 2026</span></p>
+                </div>
+            </div>
+            <div style="display: flex; gap: 24px; align-items: center;">
+                <div style="text-align: right;">
+                    <p style="font-size: 11px; color: var(--color-muted); margin-bottom: 2px;">Monto de Orden</p>
+                    <p style="font-family: var(--font-display); font-size: 18px; font-weight: bold; color: #fff;">$450.00</p>
+                </div>
+                <span class="status-tag status--entregado" style="font-size: 11px; padding: 6px 14px;">Entregado</span>
+                <button style="background: rgba(255,255,255,0.05); border: 1px solid var(--color-border); padding: 10px 18px; border-radius: 8px; color: #fff; cursor: pointer; font-size: 13px; transition: 0.2s;">Gestionar ↗</button>
             </div>
         </div>
+
+        <!-- Ticket 2 -->
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; padding: 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 0 15px rgba(239, 68, 68, 0.05);">
+            <div style="display: flex; gap: 20px; align-items: center;">
+                <div style="width: 50px; height: 50px; background: rgba(239, 68, 68, 0.1); color: #ef4444; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                </div>
+                <div>
+                    <p style="font-family: var(--font-display); font-size: 16px; font-weight: bold; color: #fff; margin-bottom: 4px;">#ORD-2939 <span style="font-size: 13px; color: var(--color-muted); font-weight: normal; margin-left: 10px;">Por: <strong>María López</strong></span></p>
+                    <p style="font-size: 13px; color: var(--color-muted);">Freno de Disco Hidráulico (x1) • <span style="color:#aaa;">Procesado el 13 Ene, 2026</span></p>
+                </div>
+            </div>
+            <div style="display: flex; gap: 24px; align-items: center;">
+                <div style="text-align: right;">
+                    <p style="font-size: 11px; color: var(--color-muted); margin-bottom: 2px;">Monto de Orden</p>
+                    <p style="font-family: var(--font-display); font-size: 18px; font-weight: bold; color: #fff;">$1,200.00</p>
+                </div>
+                <span class="status-tag status--cancelado" style="font-size: 11px; padding: 6px 14px;">Cancelado</span>
+                <button style="background: rgba(255,255,255,0.05); border: 1px solid var(--color-border); padding: 10px 18px; border-radius: 8px; color: #fff; cursor: pointer; font-size: 13px; transition: 0.2s;">Gestionar ↗</button>
+            </div>
+        </div>
+
+        <!-- Ticket 3 -->
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--color-primary); border-radius: 12px; padding: 20px; display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden;">
+            <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--color-primary);"></div>
+            <div style="display: flex; gap: 20px; align-items: center;">
+                <div style="width: 50px; height: 50px; background: rgba(57, 116, 224, 0.1); color: var(--color-primary); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                </div>
+                <div>
+                    <p style="font-family: var(--font-display); font-size: 16px; font-weight: bold; color: #fff; margin-bottom: 4px;">#ORD-2940 <span style="font-size: 13px; color: var(--color-muted); font-weight: normal; margin-left: 10px;">Por: <strong>Carlos Estrada</strong></span></p>
+                    <p style="font-size: 13px; color: var(--color-muted);">Filtro de Aire Alto Flujo (x4) • <span style="color:#aaa;">Hace 2 horas</span></p>
+                </div>
+            </div>
+            <div style="display: flex; gap: 24px; align-items: center;">
+                <div style="text-align: right;">
+                    <p style="font-size: 11px; color: var(--color-muted); margin-bottom: 2px;">Monto de Orden</p>
+                    <p style="font-family: var(--font-display); font-size: 18px; font-weight: bold; color: #fff;">$850.50</p>
+                </div>
+                <span class="status-tag" style="background: rgba(234, 179, 8, 0.2); color: #eab308; font-size: 11px; padding: 6px 14px;">Pendiente</span>
+                <button style="background: var(--color-primary); border: none; padding: 11px 19px; border-radius: 8px; color: #fff; cursor: pointer; font-size: 13px; transition: 0.2s; font-weight: 500;">Procesar ↗</button>
+            </div>
+        </div>
+        
     </div>
 @endsection
