@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from app.routers import *
 from app.data.database import engine, Base
+from app.models import *
 
 # Crear tablas en la BD 
 Base.metadata.create_all(bind=engine)
