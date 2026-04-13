@@ -3,97 +3,113 @@
 @section('title', 'Control de Pedidos')
 
 @section('page-title', 'Control de Pedidos')
-@section('page-subtitle', 'Gestiona y sigue las ordenes de los clientes.')
-
-@push('styles')
-<style>
-    .filters-bar {
-        display: flex; gap: 20px; padding: 0 0 30px; align-items: center;
-    }
-    .search-container { position: relative; flex: 1; max-width: 600px; }
-    
-    .search-input {
-        width: 100%; background-color: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); 
-        border-radius: 12px; padding: 14px 14px 14px 45px; color: white; font-family: var(--font-body);
-    }
-    .search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); opacity: 0.5; }
-
-    .filter-select {
-        background-color: #333; color: white; border: none; border-radius: 12px;
-        padding: 14px 40px 14px 20px; font-family: var(--font-body);
-        appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-        background-repeat: no-repeat; background-position: right 15px center;
-    }
-
-    .table-card { background-color: var(--color-surface); border-radius: 20px; overflow: hidden; border: 1px solid var(--color-border); }
-    .orders-table { width: 100%; border-collapse: collapse; text-align: left; }
-    .orders-table th { 
-        padding: 20px; font-family: var(--font-display); font-size: 13px; 
-        color: var(--color-muted); border-bottom: 1px solid var(--color-border);
-    }
-    .orders-table td { padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; }
-    .orders-table tr:hover { background-color: rgba(255,255,255,0.03); transition: 0.2s; }
-    
-    .order-id { color: var(--color-primary); font-weight: 600; text-decoration: none; }
-
-    .status-pill {
-        display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; 
-        border-radius: 20px; font-size: 11px; font-weight: 600; text-transform: uppercase;
-    }
-
-    .status--surtido { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
-    .status--pendiente { background: rgba(234, 179, 8, 0.2); color: #eab308; }
-    .status--enviado { background: rgba(57, 116, 224, 0.2); color: #3974e0; }
-    .status--cancelado { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
-
-    .view-btn { 
-        background: none; border: none; cursor: pointer; color: white; opacity: 0.7; transition: 0.2s; 
-    }
-    .view-btn:hover { opacity: 1; transform: scale(1.1); }
-</style>
-@endpush
+@section('page-subtitle', 'Gestiona y sigue las órdenes de los clientes.')
 
 @section('content')
-    <section class="filters-bar">
-        <div class="search-container">
-            <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            <input type="text" class="search-input" placeholder="Buscar Orden por ID, Nombre del cliente ...">
+<div class="glass-card rounded-2xl border border-slate-700/50 flex flex-col">
+    <!-- Toolbar -->
+    <div class="p-6 border-b border-dark-border flex flex-col md:flex-row md:items-center justify-between gap-4 bg-dark-bg/50 rounded-t-2xl">
+        <div class="relative w-full md:w-96">
+            <i class="fa-solid fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"></i>
+            <input type="text" placeholder="Buscar Orden por ID, Nombre del cliente..." class="w-full bg-slate-800 border-none rounded-xl pl-11 pr-4 py-2.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all font-medium placeholder-slate-500">
         </div>
-        <select class="filter-select"><option>Status: Todos</option></select>
-        <select class="filter-select"><option>Fecha: Esta Semana</option></select>
-    </section>
+        
+        <div class="flex items-center gap-3">
+            <select class="bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all cursor-pointer appearance-none">
+                <option>Status: Todos</option>
+                <option>Surtido</option>
+                <option>Pendiente</option>
+                <option>Enviado</option>
+            </select>
+            <select class="bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all cursor-pointer appearance-none">
+                <option>Fecha: Esta Semana</option>
+                <option>Este Mes</option>
+            </select>
+            <button class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors border border-slate-700 flex items-center gap-2">
+                <i class="fa-solid fa-filter"></i>
+            </button>
+        </div>
+    </div>
 
-    <div class="table-card">
-        <table class="orders-table">
+    <!-- Table -->
+    <div class="overflow-x-auto rounded-b-2xl">
+        <table class="w-full text-left border-collapse">
             <thead>
-                <tr>
-                    <th>Orden ID</th>
-                    <th>Cliente</th>
-                    <th>Fecha de compra</th>
-                    <th>Monto</th>
-                    <th>Status</th>
-                    <th>Acciones</th>
+                <tr class="bg-dark-card/50 border-b border-dark-border text-xs uppercase tracking-wider text-slate-400 font-bold">
+                    <th class="px-6 py-4">Orden ID</th>
+                    <th class="px-6 py-4">Cliente</th>
+                    <th class="px-6 py-4">Fecha de compra</th>
+                    <th class="px-6 py-4">Monto</th>
+                    <th class="px-6 py-4">Status</th>
+                    <th class="px-6 py-4 text-right">Acciones</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td><a href="#" class="order-id">#ORD-2938</a></td>
-                    <td>Juan Pérez</td>
-                    <td>14 de Enero de 2026</td>
-                    <td style="font-weight: 500;">$1,245.00</td>
-                    <td><span class="status-pill status--surtido">Surtido ▾</span></td>
-                    <td><button class="view-btn" title="Ver detalle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button></td>
+            <tbody class="divide-y divide-dark-border">
+                <tr class="hover:bg-slate-800/30 transition-colors group">
+                    <td class="px-6 py-4">
+                        <a href="#" class="text-brand-400 font-bold hover:text-brand-300 transition-colors">#ORD-2938</a>
+                    </td>
+                    <td class="px-6 py-4 text-white font-medium">Juan Pérez</td>
+                    <td class="px-6 py-4 text-slate-400 text-sm">14 de Enero de 2026</td>
+                    <td class="px-6 py-4 font-bold text-white">$1,245.00</td>
+                    <td class="px-6 py-4">
+                        <span class="bg-emerald-500/10 text-emerald-400 font-bold text-xs px-3 py-1.5 rounded-lg border border-emerald-500/20 uppercase inline-flex items-center gap-1.5">
+                            <i class="fa-solid fa-circle text-[8px]"></i> Surtido
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                        <button class="w-8 h-8 rounded-lg bg-slate-800 text-slate-400 hover:text-white hover:bg-brand-600 transition-colors inline-flex items-center justify-center tooltip-trigger" title="Ver detalle">
+                            <i class="fa-regular fa-eye"></i>
+                        </button>
+                    </td>
                 </tr>
-                {{-- Aquí irían más filas --}}
+                <tr class="hover:bg-slate-800/30 transition-colors group">
+                    <td class="px-6 py-4">
+                        <a href="#" class="text-brand-400 font-bold hover:text-brand-300 transition-colors">#ORD-2939</a>
+                    </td>
+                    <td class="px-6 py-4 text-white font-medium">María González</td>
+                    <td class="px-6 py-4 text-slate-400 text-sm">15 de Enero de 2026</td>
+                    <td class="px-6 py-4 font-bold text-white">$3,550.00</td>
+                    <td class="px-6 py-4">
+                        <span class="bg-amber-500/10 text-amber-400 font-bold text-xs px-3 py-1.5 rounded-lg border border-amber-500/20 uppercase inline-flex items-center gap-1.5">
+                            <i class="fa-solid fa-clock text-[10px]"></i> Pendiente
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                        <button class="w-8 h-8 rounded-lg bg-slate-800 text-slate-400 hover:text-white hover:bg-brand-600 transition-colors inline-flex items-center justify-center tooltip-trigger" title="Ver detalle">
+                            <i class="fa-regular fa-eye"></i>
+                        </button>
+                    </td>
+                </tr>
+                <tr class="hover:bg-slate-800/30 transition-colors group">
+                    <td class="px-6 py-4">
+                        <a href="#" class="text-brand-400 font-bold hover:text-brand-300 transition-colors">#ORD-2940</a>
+                    </td>
+                    <td class="px-6 py-4 text-white font-medium">AutoTransportes MX</td>
+                    <td class="px-6 py-4 text-slate-400 text-sm">16 de Enero de 2026</td>
+                    <td class="px-6 py-4 font-bold text-white">$12,400.00</td>
+                    <td class="px-6 py-4">
+                        <span class="bg-blue-500/10 text-blue-400 font-bold text-xs px-3 py-1.5 rounded-lg border border-blue-500/20 uppercase inline-flex items-center gap-1.5">
+                            <i class="fa-solid fa-truck-fast text-[11px]"></i> Enviado
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                        <button class="w-8 h-8 rounded-lg bg-slate-800 text-slate-400 hover:text-white hover:bg-brand-600 transition-colors inline-flex items-center justify-center tooltip-trigger" title="Ver detalle">
+                            <i class="fa-regular fa-eye"></i>
+                        </button>
+                    </td>
+                </tr>
             </tbody>
         </table>
-
-        <footer class="table-footer" style="display: flex; justify-content: space-between; align-items: center; padding: 20px; background-color: rgba(0,0,0,0.2);">
-            <p class="pagination-text" style="font-size: 13px; color: var(--color-muted);">Mostrando <span>1 a 5</span> de <span>100</span> resultados</p>
-            <div class="nav-arrows" style="display: flex; gap: 15px;">
-                <button class="arrow-btn" style="cursor: pointer; opacity: 0.6; background: none; border: none;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
-                <button class="arrow-btn" style="cursor: pointer; opacity: 0.6; background: none; border: none;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
-            </div>
-        </footer>
     </div>
+
+    <!-- Paginación -->
+    <div class="p-4 border-t border-dark-border flex items-center justify-between text-sm text-slate-400 bg-dark-bg/50 rounded-b-2xl">
+        <p>Mostrando 3 de 100 resultados</p>
+        <div class="flex gap-2">
+            <button class="px-3 py-1.5 rounded-lg border border-slate-700 hover:bg-slate-700 hover:text-white transition-colors disabled:opacity-50" disabled>Anterior</button>
+            <button class="px-3 py-1.5 rounded-lg border border-slate-700 hover:bg-slate-700 hover:text-white transition-colors">Siguiente</button>
+        </div>
+    </div>
+</div>
 @endsection

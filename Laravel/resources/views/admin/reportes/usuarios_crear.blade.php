@@ -5,158 +5,91 @@
 @section('page-title', 'Añadir nuevo Usuario')
 @section('page-subtitle', 'Llena los siguientes detalles para registrar un usuario al sistema')
 
-@push('styles')
-<style>
-    .form-card {
-        background-color: #111827;
-        border-radius: var(--radius-lg);
-        border: 1px solid rgba(255,255,255,0.07);
-        padding: 32px 40px 40px;
-    }
-
-    .form-row { display: grid; gap: 28px; }
-    .form-row--full { grid-template-columns: 1fr; }
-    .form-row--half { grid-template-columns: 1fr 1fr; }
-
-    .form-divider {
-        border: none;
-        border-top: 1px solid rgba(255,255,255,0.06);
-        margin: 28px 0;
-    }
-
-    .upload-zone {
-        border: 1.5px dashed rgba(255,255,255,0.18);
-        border-radius: var(--radius-lg);
-        background-color: rgba(255,255,255,0.02);
-        padding: 40px 20px;
-        display: flex; flex-direction: column; align-items: center; gap: 10px;
-        cursor: pointer; transition: 0.2s;
-    }
-
-    .upload-zone:hover {
-        border-color: var(--color-primary);
-        background-color: rgba(57,116,224,0.04);
-    }
-    
-    /* Toggle Switch Styles */
-    .switch-wrap {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-top: 8px;
-    }
-    .switch {
-        position: relative;
-        display: inline-block;
-        width: 44px;
-        height: 24px;
-    }
-    .switch input { 
-        opacity: 0;
-        width: 0;
-        height: 0;
-    }
-    .slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background-color: rgba(255,255,255,0.1);
-        transition: .4s;
-        border-radius: 34px;
-    }
-    .slider:before {
-        position: absolute;
-        content: "";
-        height: 18px;
-        width: 18px;
-        left: 3px;
-        bottom: 3px;
-        background-color: white;
-        transition: .4s;
-        border-radius: 50%;
-    }
-    input:checked + .slider {
-        background-color: var(--color-primary);
-    }
-    input:checked + .slider:before {
-        transform: translateX(20px);
-    }
-</style>
-@endpush
-
 @section('content')
-    <div style="display: flex; justify-content: flex-end; gap: 12px; margin-bottom: 20px;">
-        <a href="{{ url('/usuarios') }}" class="btn btn-secondary">Cancelar</a>
-        <button class="btn btn-primary" type="button" onclick="document.getElementById('form-usuario').submit()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M16 21v-2a4 4 0 00-8 0v2M12 11a4 4 0 100-8 4 4 0 000 8z" />
-                <path d="M19 12h-6M16 15l3-3-3-3" />
-            </svg>
+    <div class="flex justify-end gap-3 mb-6">
+        <a href="{{ url('/admin/reportes/usuarios') }}" class="bg-slate-800 hover:bg-slate-700 text-white font-medium py-2.5 px-6 rounded-xl transition-colors border border-slate-700">
+            Cancelar
+        </a>
+        <button class="bg-brand-600 hover:bg-brand-500 text-white font-medium py-2.5 px-6 rounded-xl shadow-lg shadow-brand-500/25 transition-all flex items-center gap-2" type="button" onclick="document.getElementById('form-usuario').submit()">
+            <i class="fa-solid fa-user-check"></i>
             Guardar Usuario
         </button>
     </div>
 
-    <div class="form-card">
+    <div class="glass-card rounded-2xl border border-slate-700/50 p-6 md:p-10 mb-8">
         <form id="form-usuario" action="#" method="POST">
             @csrf
 
-            <div class="form-row form-row--full">
+            <!-- Section 1 -->
+            <div class="grid grid-cols-1 gap-6">
                 <div>
-                    <label class="field-label" for="nombre">Nombre Completo</label>
-                    <input id="nombre" type="text" class="input" placeholder="e.g. Juan Pérez">
+                    <label class="block text-sm font-semibold text-slate-300 mb-2" for="nombre">Nombre Completo</label>
+                    <input id="nombre" type="text" class="w-full bg-slate-800 border-none rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all font-medium placeholder-slate-500" placeholder="e.g. Juan Pérez">
                 </div>
             </div>
 
-            <hr class="form-divider">
+            <hr class="border-t border-slate-700/50 my-8">
 
-            <div class="form-row form-row--half">
+            <!-- Section 2 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label class="field-label" for="email">Correo Electrónico</label>
-                    <input id="email" type="email" class="input" placeholder="e.g. empleado@macuin.com">
+                    <label class="block text-sm font-semibold text-slate-300 mb-2" for="email">Correo Electrónico</label>
+                    <div class="relative">
+                        <i class="fa-regular fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"></i>
+                        <input id="email" type="email" class="w-full bg-slate-800 border-none rounded-xl pl-11 pr-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all font-medium placeholder-slate-500" placeholder="e.g. empleado@macuin.com">
+                    </div>
                 </div>
                 <div>
-                    <label class="field-label" for="rol">Rol</label>
-                    <select id="rol" class="input" style="appearance: none;">
-                        <option value="" disabled selected>Selecciona un Rol</option>
-                        <option value="admin">Administrador</option>
-                        <option value="gerente">Gerente</option>
-                        <option value="empleado">Empleado de Mostrador</option>
-                        <option value="almacen">Encargado de Almacén</option>
-                    </select>
-                </div>
-            </div>
-
-            <hr class="form-divider">
-
-            <div class="form-row form-row--half">
-                <div>
-                    <label class="field-label" for="password">Contraseña (Obligatorio)</label>
-                    <input id="password" type="password" class="input" placeholder="Ingresa una contraseña segura">
-                </div>
-                <div>
-                    <label class="field-label" for="estado">Estado de la cuenta</label>
-                    <div class="switch-wrap">
-                        <label class="switch">
-                            <input type="checkbox" checked>
-                            <span class="slider"></span>
-                        </label>
-                        <span style="font-family: var(--font-display); font-size: 13px; color: var(--color-subtle);">Activo (El usuario puede iniciar sesión)</span>
+                    <label class="block text-sm font-semibold text-slate-300 mb-2" for="rol">Rol</label>
+                    <div class="relative">
+                        <select id="rol" class="w-full bg-slate-800 border-none rounded-xl pl-4 pr-10 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all font-medium appearance-none cursor-pointer">
+                            <option value="" disabled selected>Selecciona un Rol</option>
+                            <option value="admin">Administrador</option>
+                            <option value="gerente">Gerente</option>
+                            <option value="empleado">Empleado de Mostrador</option>
+                            <option value="almacen">Encargado de Almacén</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none text-xs"></i>
                     </div>
                 </div>
             </div>
 
-            <hr class="form-divider">
+            <hr class="border-t border-slate-700/50 my-8">
 
+            <!-- Section 3 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-300 mb-2" for="password">Contraseña (Obligatorio)</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"></i>
+                        <input id="password" type="password" class="w-full bg-slate-800 border-none rounded-xl pl-11 pr-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all font-medium placeholder-slate-500" placeholder="Ingresa una contraseña segura">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-300 mb-2">Estado de la cuenta</label>
+                    <label class="flex items-center gap-4 cursor-pointer mt-3">
+                        <div class="relative">
+                            <input type="checkbox" class="sr-only peer" checked>
+                            <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-brand-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-500"></div>
+                        </div>
+                        <span class="text-sm font-medium text-slate-400">Activo (El usuario puede iniciar sesión)</span>
+                    </label>
+                </div>
+            </div>
+
+            <hr class="border-t border-slate-700/50 my-8">
+
+            <!-- Upload Photo -->
             <div>
-                <label class="field-label">Fotografía de Perfil (Opcional)</label>
-                <div class="upload-zone">
-                    <div style="width: 46px; height: 46px; background: var(--color-logo-bg); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
-                        </svg>
+                <label class="block text-sm font-semibold text-slate-300 mb-2">Fotografía de Perfil (Opcional)</label>
+                <div class="border-2 border-dashed border-slate-700 hover:border-brand-500 bg-slate-800/30 hover:bg-brand-500/5 rounded-2xl p-10 flex flex-col items-center justify-center gap-3 cursor-pointer transition-all group">
+                    <div class="w-14 h-14 bg-slate-800 group-hover:bg-brand-500/20 text-slate-400 group-hover:text-brand-500 rounded-full flex items-center justify-center text-2xl transition-colors shadow-inner">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
                     </div>
-                    <p style="font-family: var(--font-display); font-size: 14px; color: #fff;">Click para subir</p>
-                    <p style="font-family: var(--font-display); font-size: 11px; color: var(--color-subtle);">SVG, PNG, JPG (MAX 800 x 800 px)</p>
+                    <div class="text-center">
+                        <p class="text-sm font-bold text-white mb-1 tracking-wide">Click para subir</p>
+                        <p class="text-xs font-medium text-slate-500">SVG, PNG, JPG (MAX 800 x 800 px)</p>
+                    </div>
                 </div>
             </div>
         </form>

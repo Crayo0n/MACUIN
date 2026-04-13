@@ -1,0 +1,81 @@
+{% extends "Base.html" %}
+{% block title %}Mis Pedidos - MACUIN Premium{% endblock %}
+
+{% block content %}
+<div class="mb-8">
+    <h1 class="text-3xl font-bold text-white mb-2 tracking-tight">Mis Pedidos</h1>
+    <p class="text-slate-400">Rastrea el estado de tus compras y tu historial.</p>
+</div>
+
+<div class="glass-card rounded-2xl overflow-hidden relative z-10 border border-slate-700/50">
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-dark-card border-b border-dark-border text-xs uppercase tracking-wider text-slate-400">
+                    <th class="p-4 font-semibold">ID Pedido</th>
+                    <th class="p-4 font-semibold">Fecha</th>
+                    <th class="p-4 font-semibold">Artículos</th>
+                    <th class="p-4 font-semibold">Total</th>
+                    <th class="p-4 font-semibold">Estado</th>
+                    <th class="p-4 font-semibold text-right">Acciones</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-dark-border">
+                <!-- Pedido 1 -->
+                <tr class="hover:bg-slate-800/30 transition-colors">
+                    <td class="p-4 text-white font-medium">#MAC-8902</td>
+                    <td class="p-4 text-slate-400 text-sm">13 Abr, 2026</td>
+                    <td class="p-4 text-slate-300 text-sm">3</td>
+                    <td class="p-4 text-brand-400 font-bold">$4,350.00</td>
+                    <td class="p-4">
+                        <span class="bg-emerald-500/20 text-emerald-400 text-xs font-bold px-2.5 py-1 rounded-md border border-emerald-500/30">
+                            <i class="fa-solid fa-check-circle mr-1"></i> Entregado
+                        </span>
+                    </td>
+                    <td class="p-4 text-right">
+                        <button class="text-slate-400 hover:text-brand-400 transition-colors text-sm font-medium">
+                            Ver Detalles <i class="fa-solid fa-chevron-right ml-1 text-xs"></i>
+                        </button>
+                    </td>
+                </tr>
+                
+                <!-- Pedido 2 -->
+                <tr class="hover:bg-slate-800/30 transition-colors">
+                    <td class="p-4 text-white font-medium">#MAC-8745</td>
+                    <td class="p-4 text-slate-400 text-sm">05 Abr, 2026</td>
+                    <td class="p-4 text-slate-300 text-sm">1</td>
+                    <td class="p-4 text-brand-400 font-bold">$1,200.00</td>
+                    <td class="p-4">
+                        <span class="bg-amber-500/20 text-amber-400 text-xs font-bold px-2.5 py-1 rounded-md border border-amber-500/30">
+                            <i class="fa-solid fa-truck-fast mr-1"></i> En Ruta
+                        </span>
+                    </td>
+                    <td class="p-4 text-right">
+                        <button class="text-slate-400 hover:text-brand-400 transition-colors text-sm font-medium">
+                            Ver Detalles <i class="fa-solid fa-chevron-right ml-1 text-xs"></i>
+                        </button>
+                    </td>
+                </tr>
+                
+                <!-- Pedido 3 -->
+                <tr class="hover:bg-slate-800/30 transition-colors">
+                    <td class="p-4 text-white font-medium">#MAC-8610</td>
+                    <td class="p-4 text-slate-400 text-sm">28 Mar, 2026</td>
+                    <td class="p-4 text-slate-300 text-sm">8</td>
+                    <td class="p-4 text-brand-400 font-bold">$15,400.00</td>
+                    <td class="p-4">
+                        <span class="bg-emerald-500/20 text-emerald-400 text-xs font-bold px-2.5 py-1 rounded-md border border-emerald-500/30">
+                            <i class="fa-solid fa-check-circle mr-1"></i> Entregado
+                        </span>
+                    </td>
+                    <td class="p-4 text-right">
+                        <button class="text-slate-400 hover:text-brand-400 transition-colors text-sm font-medium">
+                            Ver Detalles <i class="fa-solid fa-chevron-right ml-1 text-xs"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

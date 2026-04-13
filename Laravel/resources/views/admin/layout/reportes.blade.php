@@ -2,106 +2,38 @@
 
 @section('title', 'Reportes Empresariales')
 
-@push('styles')
-<style>
-    .report-container {
-        display: flex;
-        gap: 30px;
-        margin-top: -10px; 
-    }
-
-    .report-sidebar {
-        width: 300px;
-        flex-shrink: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .sidebar-card {
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid var(--color-border);
-        border-radius: 15px;
-        padding: 20px;
-    }
-
-    .sidebar-title {
-        font-family: var(--font-display);
-        font-size: 11px;
-        color: var(--color-muted);
-        text-transform: uppercase;
-        margin-bottom: 15px;
-        letter-spacing: 1px;
-    }
-
-    .report-nav-btn {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 12px;
-        border-radius: 10px;
-        color: white;
-        margin-bottom: 8px;
-        border: none;
-        background: transparent;
-        font-family: var(--font-display);
-        font-size: 13px;
-        text-align: left;
-        cursor: pointer;
-        transition: 0.3s;
-        text-decoration: none;
-    }
-
-    .report-nav-btn.active {
-        background: var(--color-primary);
-    }
-
-    .report-nav-btn:hover:not(.active) {
-        background: rgba(255, 255, 255, 0.1);
-    }
-
-    .report-main {
-        flex: 1;
-    }
-
-    .table-report-card {
-        background: var(--color-surface);
-        border-radius: 15px;
-        border: 1px solid var(--color-border);
-        overflow: hidden;
-    }
-</style>
-@stack('report-styles')
-@endpush
-
 @section('content')
-<div class="report-container">
+<div class="flex flex-col lg:flex-row gap-8">
     
-    <aside class="report-sidebar">
-        <div class="sidebar-card">
-            <h3 class="sidebar-title">Seleccionar Reporte</h3>
+    <!-- Sidebar -->
+    <aside class="w-full lg:w-80 flex-shrink-0 flex flex-col gap-6">
+        <div class="glass-card p-6 rounded-2xl border border-slate-700/50">
+            <h3 class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">Seleccionar Reporte</h3>
             
-            <a href="#" 
-               class="report-nav-btn {{ Request::is('admin/reportes/pedidos') ? 'active' : '' }}">
-                Pedidos
+            <a href="/admin/reportes/pedidos" 
+               class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all mb-2 {{ Request::is('*pedidos*') ? 'bg-brand-600 text-white shadow-lg shadow-brand-500/20' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' }}">
+                <i class="fa-solid fa-box-open w-5 text-center"></i>
+                <span class="font-medium">Pedidos</span>
             </a>
             
-            <a href="#" 
-               class="report-nav-btn {{ Request::is('admin/reportes/ventas') ? 'active' : '' }}">
-                Ventas
+            <a href="/admin/reportes/ventas" 
+               class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all mb-2 {{ Request::is('*ventas*') ? 'bg-brand-600 text-white shadow-lg shadow-brand-500/20' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' }}">
+                <i class="fa-solid fa-chart-line w-5 text-center"></i>
+                <span class="font-medium">Ventas</span>
             </a>
             
-            <a href="#" 
-               class="report-nav-btn {{ Request::is('admin/reportes/usuarios') ? 'active' : '' }}">
-                Clientes
+            <a href="/admin/reportes/usuarios" 
+               class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all {{ Request::is('*usuarios*') ? 'bg-brand-600 text-white shadow-lg shadow-brand-500/20' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' }}">
+                <i class="fa-solid fa-users w-5 text-center"></i>
+                <span class="font-medium">Clientes</span>
             </a>
         </div>
 
         @yield('sidebar-filters')
     </aside>
 
-    <main class="report-main">
+    <!-- Main Content -->
+    <main class="flex-grow min-w-0">
         @yield('report-body')
     </main>
 
