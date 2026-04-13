@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Pedidos</title>
+    <link rel="stylesheet" href="/Flask/frontend/static/css/ordenes.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo-container">
+            <img src="/Flask/frontend/static/img/LOGO.png" alt="Macuin Logo" class="logo-icon">
+            <div class="logo-text">
+                <h1>MACUIN</h1>
+                <p>Autopartes Dist.</p>
+            </div>
+        </div>
+
+        <nav class="nav-links">
+            <a href="#" class="nav-link">
+                <img src="/Flask/frontend/static/img/icoinventariob.png" alt="Inventario">
+                Inventario
+            </a>
+            <a href="#" class="nav-link ">
+                <img src="/Flask/frontend/static/img/icoordenesn.png" alt="Ordenes">
+                Ordenes
+            </a>
+            <a href="#" class="nav-link active">
+                <img src="/Flask/frontend/static/img/icoreportes.png" alt="Reportes">
+                Mis Pedidos
+            </a>
+        </nav>
+
+        <div class="user-container">
+            <button class="notification-btn">
+                <img src="/Flask/frontend/static/img/noti.png" alt="Notificaciones">
+            </button>
+            <div class="user-info">
+                <p class="user-name">Mauricio Rodríguez</p>
+                <p class="user-role">Gerente General</p>
+            </div>
+            <img src="/Flask/frontend/static/img/perfil.png" alt="Avatar" class="user-avatar">
+        </div>
+    </header>
+
+    <main class="dashboard-container">
+        <section class="page-header">
+            <h2>Control de Pedidos</h2>
+            <p>Historiadl de peidos</p>
+        </section>
+
+        <section class="filters-bar">
+            <div class="search-wrapper">
+                <img src="/Flask/frontend/static/img/search.png" alt="Buscar" class="search-icon">
+                <input type="text" placeholder="Buscar Orden por ID, Fecha..." class="search-input">
+            </div>
+            
+            <div class="filters-group">
+                <div class="select-wrapper filter-select-wrapper">
+                    <select class="custom-select filter-select">
+                        <option>Status: Todos</option>
+                    </select>
+                    <img src="/Flask/frontend/static/img/icosdown.png" alt="Dropdown" class="select-icon">
+                </div>
+
+                <div class="select-wrapper filter-select-wrapper">
+                    <select class="custom-select filter-select">
+                        <option>Fecha: Esta Semana</option>
+                    </select>
+                    <img src="/Flask/frontend/static/img/icosdown.png" alt="Dropdown" class="select-icon">
+                </div>
+            </div>
+        </section>
+
+        <div class="panel table-panel full-width">
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Orden ID</th>
+                            <th>Fecha de compra</th>
+                            <th>Monto</th>
+                            <th>Status</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="text-blue-link font-bold">#ORD-2938</span></td>
+                            <td>14 de Enero de 2026</td>
+                            <td><span class="font-bold">$1,245.00</span></td>
+                            <td>
+                                <div class="status-dropdown-badge green">
+                                    <span>Entregado</span>
+                                    
+                                </div>
+                            </td>
+                            <td>
+                                <button class="action-btn"><img src="/Flask/frontend/static/img/elojoblanco.png" alt="Ver"></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="text-blue-link font-bold">#ORD-2938</span></td>
+                            <td>14 de Enero de 2026</td>
+                            <td><span class="font-bold">$1,245.00</span></td>
+                            <td>
+                                <div class="status-dropdown-badge yellow">
+                                    <span>En Proceso</span>
+                                </div>
+                            </td>
+                            <td>
+                                <button class="action-btn"><img src="/Flask/frontend/static/img/elojoblanco.png" alt="Ver"></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="text-blue-link font-bold">#ORD-2938</span></td>
+                            <td>14 de Enero de 2026</td>
+                            <td><span class="font-bold">$1,245.00</span></td>
+                            <td>
+                                <div class="status-dropdown-badge blue">
+                                    <span>Enviado</span>
+                                </div>
+                            </td>
+                            <td>
+                                <button class="action-btn"><img src="/Flask/frontend/static/img/elojoblanco.png" alt="Ver"></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="text-blue-link font-bold">#ORD-2938</span></td>
+                            <td>14 de Enero de 2026</td>
+                            <td><span class="font-bold">$1,245.00</span></td>
+                            <td>
+                                <div class="status-dropdown-badge red">
+                                    <span>Cancelado</span>
+                                    </div>
+                            </td>
+                            <td>
+                                <button class="action-btn"><img src="/Flask/frontend/static/img/elojoblanco.png" alt="Ver"></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="text-blue-link font-bold">#ORD-2938</span></td>
+                            <td>14 de Enero de 2026</td>
+                            <td><span class="font-bold">$1,245.00</span></td>
+                            <td>
+                                <div class="status-dropdown-badge green">
+                                    <span>Entregado</span>
+                                </div>
+                            </td>
+                            <td>
+                                <button class="action-btn"><img src="/Flask/frontend/static/img/elojoblanco.png" alt="Ver"></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="text-blue-link font-bold">#ORD-2938</span></td>
+                            <td>14 de Enero de 2026</td>
+                            <td><span class="font-bold">$1,245.00</span></td>
+                            <td>
+                                <div class="status-dropdown-badge green">
+                                    <span>Entregado</span>
+                                </div>
+                            </td>
+                            <td>
+                                <button class="action-btn"><img src="/Flask/frontend/static/img/elojoblanco.png" alt="Ver"></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination">
+                <p>Mostrando <span class="text-blue-link">1</span> a <span class="text-blue-link">5</span> de <span class="text-blue-link">100</span> resultados</p>
+                <div class="pagination-controls">
+                    <button class="page-btn"><img src="/Flask/frontend/static/img/icoizquierda.png" alt="Prev"></button>
+                    <button class="page-btn"><img src="/Flask/frontend/static/img/icoderecha.png" alt="Next"></button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

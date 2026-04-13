@@ -323,3 +323,102 @@ body.login-body {
     border-color: var(--accent-blue-hover);
     color: var(--accent-blue-hover);
 }
+
+/* ===== ESTILOS ADICIONALES PARA FUNCIONALIDAD ===== */
+
+/* Alertas */
+.alert-message {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.alert-error {
+    background-color: rgba(220, 53, 69, 0.15);
+    color: #ff6b6b;
+    border: 1px solid rgba(220, 53, 69, 0.3);
+}
+
+.alert-success {
+    background-color: rgba(40, 167, 69, 0.15);
+    color: #51cf66;
+    border: 1px solid rgba(40, 167, 69, 0.3);
+}
+
+.alert-info {
+    background-color: rgba(58, 100, 216, 0.15);
+    color: var(--accent-blue);
+    border: 1px solid rgba(58, 100, 216, 0.3);
+}
+
+/* Spinner de carga */
+.spinner {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Estados de carga en botones */
+.btn-primary:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Inputs deshabilitados */
+input:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Efecto de enfoque para inputs */
+.input-light-gray:focus {
+    outline: 2px solid var(--accent-blue);
+    outline-offset: 2px;
+}
+
+/* Transición suave para inputs */
+.input-light-gray {
+    transition: all 0.2s ease;
+}
+
+/* Mejora para el icono del ojo */
+.input-icon-right {
+    transition: opacity 0.2s ease;
+}
+
+.input-icon-right:hover {
+    opacity: 1;
+}
+
+/* Ajuste para el botón de registro */
+.btn-outline:active {
+    transform: scale(0.98);
+}
+
+.btn-primary:active {
+    transform: scale(0.98);
+}
