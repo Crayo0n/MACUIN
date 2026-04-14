@@ -1,134 +1,97 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MACUIN - Detalle de Producto</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+{% extends 'base.html' %}
+
+{% block title %}MACUIN - {{ producto.nombre if producto else 'Detalle de Producto' }}{% endblock %}
+
+{% block extra_css %}
     <link rel="stylesheet" href="/static/css/productos.css?v=2">
-</head>
-<body>
-    {% include 'toasts.html' %}
+{% endblock %}
 
-    <header class="navbar">
-        <div class="logo-container">
-            <img src="/Flask/static/img/LOGO.png" alt="Macuin Logo" class="logo-icon">
-            <div class="logo-text">
-                <h1>MACUIN</h1>
-                <p>Autopartes Dist.</p>
-            </div>
-        </div>
-
-        <nav class="nav-links">
-            <a href="/catalogo" class="nav-link">
-                <i class="bi bi-grid-3x3-gap"></i> Catálogo
-            </a>
-            <a href="/carrito" class="nav-link">
-                <i class="bi bi-cart"></i> Carrito 
-                {% if cart_count > 0 %} <span style="background: red; color: white; padding: 2px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; margin-left: 5px;">{{ cart_count }}</span> {% endif %}
-            </a>
-            <a href="/pedidos" class="nav-link">
-                <i class="bi bi-box-seam"></i> Mis pedidos
-            </a>
-        </nav>
-
-        <div class="user-container">
-            <button class="notification-btn">
-                <img src="/Flask/static/img/noti.png" alt="Notificaciones">
-            </button>
-            <div class="user-info">
-                <p class="user-name">Mauricio Rodríguez</p>
-                <p class="user-role">Cliente Premium</p>
-            </div>
-            <img src="/Flask/static/img/perfil.png" alt="Avatar" class="user-avatar">
-        </div>
-    </header>
-
-    <main class="dashboard-container">
-        <nav class="breadcrumb-custom">
-            <a href="/catalogo">Catálogo</a> / <span>{{ producto.nombre if producto else 'Detalle de Producto' }}</span>
-        </nav>
-
-        {% if producto %}
-        <div class="edit-grid">
-            <div class="col-left">
-                <div class="panel text-center">
-                    <div class="image-preview-box">
+{% block content %}
+    {% if producto %}
+    <div class="edit-grid">
+        <div class="col-left">
+            <div class="panel text-center">
+                <div class="image-preview-box">
+                    {% if producto.stock_disponible == 0 %}
+                        <span class="status-badge outline-red position-badge">
+                            <i class="bi bi-x-circle-fill"></i> Sin Stock
+                        </span>
+                    {% elif producto.stock_disponible <= 5 %}
+                        <span class="status-badge outline-yellow position-badge">
+                            <i class="bi bi-exclamation-triangle-fill"></i> Stock Bajo: {{ producto.stock_disponible }}
+                        </span>
+                    {% else %}
                         <span class="status-badge outline-green position-badge">
                             <i class="bi bi-check-circle-fill"></i> Stock: {{ producto.stock_disponible }}
                         </span>
-                        <img src="/static/img/icoautoparte.png" alt="{{ producto.nombre }}" class="product-image-large">
-                    </div>
-                    
-                    <div class="info-cards-container">
-                        <div class="info-mini-card">
-                            <i class="bi bi-truck text-blue"></i>
-                            <span class="small-title">Envío Rápido</span>
-                            <span class="small-desc">24-48 hrs</span>
-                        </div>
-                        <div class="info-mini-card">
-                            <i class="bi bi-shield-check text-green"></i>
-                            <span class="small-title">Garantía</span>
-                            <span class="small-desc">1 Año</span>
-                        </div>
-                        <div class="info-mini-card">
-                            <i class="bi bi-star-fill text-yellow"></i>
-                            <span class="small-title">4.8/5</span>
-                            <span class="small-desc">124 opiniones</span>
-                        </div>
-                    </div>
+                    {% endif %}
+                    <img src="/static/img/icoautoparte.png" alt="{{ producto.nombre }}" class="product-image-large">
                 </div>
-
-                <div class="panel">
-                    <h3 class="panel-heading">Especificaciones Técnicas</h3>
-                    <table class="data-table">
-                        <tbody>
-                            <tr>
-                                <th>Material</th>
-                                <td>Hierro</td>
-                            </tr>
-                            <tr>
-                                <th>Diámetro</th>
-                                <td>80 mm</td>
-                            </tr>
-                            <tr>
-                                <th>Garantía</th>
-                                <td>12 meses contra defectos</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                
+                <div class="info-cards-container">
+                    <div class="info-mini-card">
+                        <i class="bi bi-truck text-blue"></i>
+                        <span class="small-title">Envío Rápido</span>
+                        <span class="small-desc">24-48 hrs</span>
+                    </div>
+                    <div class="info-mini-card">
+                        <i class="bi bi-shield-check text-green"></i>
+                        <span class="small-title">Garantía</span>
+                        <span class="small-desc">1 Año</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-right">
-                <div class="panel form-panel">
-                    <span class="status-badge outline-blue">ID: {{ producto.sku }}</span>
-                    <h2 class="page-title-large mt-10">{{ producto.nombre }}</h2>
-                    <p class="brand-text">Categoría ID: <strong>{{ producto.categoria_id }}</strong></p>
+            <div class="panel">
+                <h3 class="panel-heading">Especificaciones Técnicas</h3>
+                <table class="data-table">
+                    <tbody>
+                        <tr>
+                            <th>SKU</th>
+                            <td>{{ producto.sku }}</td>
+                        </tr>
+                        <tr>
+                            <th>Material</th>
+                            <td>Hierro</td>
+                        </tr>
+                        <tr>
+                            <th>Garantía</th>
+                            <td>12 meses contra defectos</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-right">
+            <div class="panel form-panel">
+                <span class="status-badge outline-blue">ID: {{ producto.sku }}</span>
+                <h2 class="page-title-large mt-10">{{ producto.nombre }}</h2>
+                <p class="brand-text">Categoría ID: <strong>{{ producto.categoria_id }}</strong></p>
+                
+                <div class="price-block">
+                    <div class="price-main">
+                        <span class="current-price">${{ "%.2f"|format(producto.precio) }}</span>
+                    </div>
+                    <p class="tax-info"><i class="bi bi-info-circle"></i> Precios incluyen IVA</p>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Descripción</label>
+                    <p class="description-text">{{ producto.descripcion }}</p>
+                </div>
+
+                <div class="divider-line"></div>
+
+                <form action="/agregar_carrito" method="POST">
+                    <input type="hidden" name="autoparte_id" value="{{ producto.id }}">
+                    <input type="hidden" name="nombre" value="{{ producto.nombre }}">
+                    <input type="hidden" name="precio" value="{{ producto.precio }}">
+                    <input type="hidden" name="sku" value="{{ producto.sku }}">
+                    <input type="hidden" name="stock" value="{{ producto.stock_disponible }}">
                     
-                    <div class="price-block">
-                        <div class="price-main">
-                            <span class="current-price">${{ "%.2f"|format(producto.precio) }}</span>
-                        </div>
-                        <p class="tax-info"><i class="bi bi-info-circle"></i> Precios incluyen IVA</p>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Descripción</label>
-                        <p class="description-text">
-                        {{ producto.descripcion }}
-                        </p>
-                    </div>
-
-                    <div class="divider-line"></div>
-
-                    <form action="/agregar_carrito" method="POST">
-                        <input type="hidden" name="autoparte_id" value="{{ producto.id }}">
-                        <input type="hidden" name="nombre" value="{{ producto.nombre }}">
-                        <input type="hidden" name="precio" value="{{ producto.precio }}">
-                        <input type="hidden" name="sku" value="{{ producto.sku }}">
-                        
-                        <div class="purchase-actions">
+                    <div class="purchase-actions">
+                        {% if producto.stock_disponible > 0 %}
                             <div class="qty-selector">
                                 <label>Cant:</label>
                                 <input type="number" name="cantidad" class="input-filled qty-input" value="1" min="1" max="{{ producto.stock_disponible }}">
@@ -136,22 +99,20 @@
                             <button type="submit" class="btn-primary flex-grow">
                                 <i class="bi bi-cart-plus"></i> Agregar al Carrito
                             </button>
-                        </div>
-                    </form>
-                </div>
+                        {% else %}
+                            <button type="button" class="btn-primary flex-grow" style="background-color: #4b5563; cursor: not-allowed;" disabled>
+                                <i class="bi bi-dash-circle"></i> Producto Agotado
+                            </button>
+                        {% endif %}
+                    </div>
+                </form>
             </div>
         </div>
-        {% else %}
-        <div class="panel text-center full-width" style="padding: 40px;">
-            <h3>No se encontró el producto o hubo un problema cargándolo.</h3>
-            <a href="/catalogo" class="btn-primary" style="margin-top:20px; display:inline-block;">Regresar al Catálogo</a>
-        </div>
-        {% endif %}
-    </main>
-
-    <footer class="footer-simple">
-        <p>© 2026 MACUIN - Todos los derechos reservados</p>
-    </footer>
-
-</body>
-</html>
+    </div>
+    {% else %}
+    <div class="panel text-center full-width" style="padding: 40px;">
+        <h3>No se encontró el producto o hubo un problema cargándolo.</h3>
+        <a href="/catalogo" class="btn-primary" style="margin-top:20px; display:inline-block;">Regresar al Catálogo</a>
+    </div>
+    {% endif %}
+{% endblock %}

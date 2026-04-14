@@ -1,140 +1,193 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MACUIN - Pedidos</title>
+{% extends 'base.html' %}
+
+{% block title %}MACUIN - Mis Pedidos{% endblock %}
+
+{% block extra_css %}
     <link rel="stylesheet" href="/static/css/ordenes.css">
-</head>
-<body>
-    {% include 'toasts.html' %}
+{% endblock %}
 
-    <header class="navbar">
-        <div class="logo-container">
-            <img src="/static/img/LOGO.png" alt="Macuin Logo" class="logo-icon">
-            <div class="logo-text">
-                <h1>MACUIN</h1>
-                <p>Autopartes Dist.</p>
+{% block content %}
+    <section class="page-header">
+        <h2>Mi Historial de Compras</h2>
+        <p>Revisa el estatus, monto y detalles de todos tus pedidos recientes.</p>
+    </section>
+
+    <section class="filters-bar">
+        <div class="search-wrapper">
+            <img src="/static/img/search.png" alt="Buscar" class="search-icon">
+            <input type="text" id="searchInput" onkeyup="filtrarPedidos()" placeholder="Buscar Orden por ID u Fecha..." class="search-input">
+        </div>
+        
+        <div class="filters-group">
+            <div class="select-wrapper filter-select-wrapper">
+                <select class="custom-select filter-select" id="statusFilter" onchange="filtrarPedidos()">
+                    <option value="all">Status: Todos</option>
+                    <option value="pendiente">Pendiente</option>
+                    <option value="procesando">Procesando</option>
+                    <option value="enviado">Enviado</option>
+                    <option value="entregado">Entregado</option>
+                    <option value="cancelado">Cancelado</option>
+                </select>
+                <img src="/static/img/icosdown.png" alt="Dropdown" class="select-icon">
             </div>
         </div>
+    </section>
 
-        <nav class="nav-links">
-            <a href="/catalogo" class="nav-link">
-                <img src="/static/img/icoinventariob.png" alt="Catálogo">
-                Catálogo
-            </a>
-            <a href="/carrito" class="nav-link {% if request.path == '/carrito' %}active{% endif %}">
-                <i class="bi bi-cart"></i> Carrito 
-                {% if cart_count > 0 %} <span style="background: red; color: white; padding: 2px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; margin-left: 5px;">{{ cart_count }}</span> {% endif %}
-            </a>
-            <a href="/pedidos" class="nav-link active">
-                <img src="/static/img/icoreportes.png" alt="Pedidos">
-                Mis Pedidos
-            </a>
-        </nav>
-
-        <div class="user-container">
-            <button class="notification-btn">
-                <img src="/static/img/noti.png" alt="Notificaciones">
-            </button>
-            <div class="user-info">
-                <p class="user-name">Mauricio Rodríguez</p>
-                <p class="user-role">Gerente General</p>
-            </div>
-            <img src="/static/img/perfil.png" alt="Avatar" class="user-avatar">
-        </div>
-    </header>
-
-    <main class="dashboard-container">
-        <section class="page-header">
-            <h2>Mi Historial de Compras</h2>
-            <p>Revisa el estatus, monto y detalles de todos tus pedidos recientes.</p>
-        </section>
-
-        <section class="filters-bar">
-            <div class="search-wrapper">
-                <img src="/static/img/search.png" alt="Buscar" class="search-icon">
-                <input type="text" placeholder="Buscar Orden por ID, Fecha..." class="search-input">
-            </div>
-            
-            <div class="filters-group">
-                <div class="select-wrapper filter-select-wrapper">
-                    <select class="custom-select filter-select">
-                        <option>Status: Todos</option>
-                    </select>
-                    <img src="/static/img/icosdown.png" alt="Dropdown" class="select-icon">
-                </div>
-
-                <div class="select-wrapper filter-select-wrapper">
-                    <select class="custom-select filter-select">
-                        <option>Fecha: Esta Semana</option>
-                    </select>
-                    <img src="/static/img/icosdown.png" alt="Dropdown" class="select-icon">
-                </div>
-            </div>
-        </section>
-
-        <div class="panel table-panel full-width">
-            <div class="table-responsive">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Orden ID</th>
-                            <th>Fecha de compra</th>
-                            <th>Monto</th>
-                            <th>Status</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% if pedidos %}
-                            {% for pd in pedidos %}
-                            <tr>
-                                <td><span class="text-blue-link font-bold">#ORD-{{ pd.id }}</span></td>
-                                <td>{{ pd.fecha_creacion | default('Reciente') }}</td>
-                                <td><span class="font-bold">${{ pd.total }}</span></td>
-                                <td>
-                                    {% if pd.estatus == 'entregado' %}
-                                    <div class="status-dropdown-badge green">
-                                    {% elif pd.estatus == 'cancelado' %}
-                                    <div class="status-dropdown-badge red">
-                                    {% elif pd.estatus == 'enviado' %}
-                                    <div class="status-dropdown-badge blue">
-                                    {% else %}
-                                    <div class="status-dropdown-badge yellow">
+    <div class="panel table-panel full-width">
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Orden ID</th>
+                        <th>Fecha de compra</th>
+                        <th>Monto</th>
+                        <th>Status</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if pedidos %}
+                        {% for pd in pedidos %}
+                        <tr class="order-row" data-id="ORD-{{ pd.id }}" data-fecha="{{ pd.fecha_creacion | format_date }}" data-estatus="{{ pd.estatus | lower }}">
+                            <td><span class="text-blue-link font-bold">#ORD-{{ pd.id }}</span></td>
+                            <td>{{ pd.fecha_creacion | format_date }}</td>
+                            <td><span class="font-bold">${{ pd.total }}</span></td>
+                            <td>
+                                {% if pd.estatus|string|lower in ['entregado', 'pedidostatusenum.entregado'] %}
+                                <div class="status-dropdown-badge green">
+                                {% elif pd.estatus|string|lower in ['cancelado', 'pedidostatusenum.cancelado'] %}
+                                <div class="status-dropdown-badge red">
+                                {% elif pd.estatus|string|lower in ['enviado', 'pedidostatusenum.enviado'] %}
+                                <div class="status-dropdown-badge blue">
+                                {% else %}
+                                <div class="status-dropdown-badge yellow">
+                                {% endif %}
+                                    <span>{{ pd.estatus|string|replace('PedidoStatusEnum.', '') | capitalize }}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div style="display: flex; gap: 8px;">
+                                    <button class="action-btn" onclick="toggleDetails({{ pd.id }})" title="Ver Detalles">
+                                        <i class="bi bi-eye" style="color: white;"></i>
+                                    </button>
+                                    {% if pd.estatus|string|lower not in ['cancelado', 'enviado', 'pedidostatusenum.cancelado', 'pedidostatusenum.enviado'] %}
+                                    <button class="action-btn" 
+                                       style="background: rgba(239, 68, 68, 0.2); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;" 
+                                       onclick="showCancelModal({{ pd.id }})"
+                                       title="Cancelar Orden">
+                                        <i class="bi bi-trash" style="color: #ef4444;"></i>
+                                    </button>
                                     {% endif %}
-                                        <span>{{ pd.estatus | capitalize }}</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <button class="action-btn"><img src="/static/img/elojoblanco.png" alt="Ver detalle"></button>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        {% else %}
-                            <tr>
-                                <td colspan="5" class="text-center font-bold" style="padding: 4rem;">
-                                    <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-                                        <img src="/static/img/icoordenesn.png" alt="Empty" style="width: 48px; opacity: 0.5;">
-                                        <p style="font-size: 18px;">Aún no tienes historial de compras.</p>
-                                        <a href="/catalogo" class="btn-primary" style="margin-top: 10px; display: inline-block;">Explorar Catálogo</a>
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endif %}
-                    </tbody>
-                </table>
-            </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="order-details" id="details-{{ pd.id }}" style="display: none;">
+                            <td colspan="5" style="padding: 0;">
+                                <div style="background-color: #1F2937; padding: 15px 30px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <h4 style="margin: 0 0 10px 0; color: #9CA3AF; font-size: 13px; text-transform: uppercase;">Detalles del Recibo</h4>
+                                    <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); color: #9CA3AF;">
+                                            <th style="text-align: left; padding: 8px 0;">Item (Autoparte)</th>
+                                            <th style="text-align: center; padding: 8px 0;">Cant.</th>
+                                            <th style="text-align: right; padding: 8px 0;">Precio U.</th>
+                                            <th style="text-align: right; padding: 8px 0;">Subtotal</th>
+                                        </tr>
+                                        {% for det in pd.detalles %}
+                                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                            <td style="padding: 8px 0;">{{ autopartes_map.get(det.autoparte_id, 'PART-' ~ det.autoparte_id) }}</td>
+                                            <td style="text-align: center; padding: 8px 0;">x{{ det.cantidad }}</td>
+                                            <td style="text-align: right; padding: 8px 0;">${{ det.precio_unitario }}</td>
+                                            <td style="text-align: right; padding: 8px 0;">${{ "%.2f"|format(det.precio_unitario * det.cantidad) }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </table>
+                                    <p style="text-align: right; margin-top: 10px; color: #9CA3AF; font-size: 13px;">
+                                        Dirección Remito: {{ pd.direccion_envio }}
+                                    </p>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="text-center font-bold" style="padding: 4rem;">
+                                <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                                    <img src="/static/img/icoordenesn.png" alt="Empty" style="width: 48px; opacity: 0.5;">
+                                    <p style="font-size: 18px;">Aún no tienes historial de compras.</p>
+                                    <a href="/catalogo" class="btn-primary" style="margin-top: 10px; display: inline-block;">Explorar Catálogo</a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
 
-            <div class="pagination">
-                <p>Mostrando <span class="text-blue-link">1</span> a <span class="text-blue-link">{{ pedidos|length if pedidos else 0 }}</span> de <span class="text-blue-link">{{ pedidos|length if pedidos else 0 }}</span> resultados</p>
-                <div class="pagination-controls">
-                    <button class="page-btn"><img src="/static/img/icoizquierda.png" alt="Prev"></button>
-                    <button class="page-btn"><img src="/static/img/icoderecha.png" alt="Next"></button>
-                </div>
+
+    <!-- Modal de Cancelación -->
+    <div class="modal-overlay" id="cancel-modal">
+        <div class="modal-card">
+            <div class="modal-icon">
+                <i class="bi bi-exclamation-octagon-fill" style="color: #EF4444;"></i>
+            </div>
+            <h3 class="modal-title">¿Cancelar Pedido?</h3>
+            <p class="modal-text">Esta acción restaurará el stock de las piezas y no se puede deshacer. ¿Estás seguro?</p>
+            <div class="modal-actions">
+                <button class="modal-btn btn-modal-cancel" onclick="closeCancelModal()">Volver</button>
+                <button class="modal-btn btn-modal-confirm" id="confirm-cancel-btn">Sí, Cancelar</button>
             </div>
         </div>
-    </main>
+    </div>
+{% endblock %}
 
-</body>
-</html>
+{% block extra_js %}
+<script>
+    let orderIdToCancel = null;
+
+    function showCancelModal(id) {
+        orderIdToCancel = id;
+        document.getElementById('cancel-modal').classList.add('active');
+    }
+
+    function closeCancelModal() {
+        document.getElementById('cancel-modal').classList.remove('active');
+    }
+
+    document.getElementById('confirm-cancel-btn').addEventListener('click', () => {
+        if (orderIdToCancel) {
+            window.location.href = `/cancelar_pedido/${orderIdToCancel}`;
+        }
+    });
+
+    // Cerrar al clickear afuera
+    document.getElementById('cancel-modal').addEventListener('click', (e) => {
+        if (e.target.id === 'cancel-modal') closeCancelModal();
+    });
+
+    function toggleDetails(id) {
+        const detailRow = document.getElementById(`details-${id}`);
+        detailRow.style.display = (detailRow.style.display === 'none') ? 'table-row' : 'none';
+    }
+
+    function filtrarPedidos() {
+        const searchInput = document.getElementById('searchInput').value.toLowerCase();
+        const statusFilter = document.getElementById('statusFilter').value.toLowerCase();
+        const rows = document.querySelectorAll('.order-row');
+
+        rows.forEach(row => {
+            const rowId = row.getAttribute('data-id').toLowerCase();
+            const rowFecha = row.getAttribute('data-fecha').toLowerCase();
+            const rowEstatus = row.getAttribute('data-estatus');
+            
+            const numericId = rowId.replace('ord-', '').replace('ORD-', '');
+            const detailRow = document.getElementById(`details-${numericId}`);
+            if (detailRow) detailRow.style.display = 'none';
+
+            const searchMatch = rowId.includes(searchInput) || rowFecha.includes(searchInput);
+            const statusMatch = (statusFilter === 'all') || (rowEstatus === statusFilter);
+
+            row.style.display = (searchMatch && statusMatch) ? 'table-row' : 'none';
+        });
+    }
+</script>
+{% endblock %}
