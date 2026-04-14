@@ -15,7 +15,7 @@ class Pedido(Base):
     __tablename__ = "pedidos"
 
     id = Column(Integer, primary_key=True, index=True)
-    usuario_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    usuario_id = Column(Integer, ForeignKey("usuarios.id"), nullable=False)
     estatus = Column(Enum(PedidoStatusEnum), default=PedidoStatusEnum.pendiente, nullable=False)
     total = Column(Float, default=0.0)
     direccion_envio = Column(String, nullable=False) # Agregado para envios
