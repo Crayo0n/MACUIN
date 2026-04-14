@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control de Pedidos</title>
+    <title>MACUIN - Pedidos</title>
     <link rel="stylesheet" href="/static/css/ordenes.css">
 </head>
 <body>
+    {% include 'toasts.html' %}
 
     <header class="navbar">
         <div class="logo-container">
@@ -18,16 +19,16 @@
         </div>
 
         <nav class="nav-links">
-            <a href="#" class="nav-link">
-                <img src="/static/img/icoinventariob.png" alt="Inventario">
-                Inventario
+            <a href="/catalogo" class="nav-link">
+                <img src="/static/img/icoinventariob.png" alt="Catálogo">
+                Catálogo
             </a>
-            <a href="#" class="nav-link ">
-                <img src="/static/img/icoordenesn.png" alt="Ordenes">
-                Ordenes
+            <a href="/carrito" class="nav-link {% if request.path == '/carrito' %}active{% endif %}">
+                <i class="bi bi-cart"></i> Carrito 
+                {% if cart_count > 0 %} <span style="background: red; color: white; padding: 2px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; margin-left: 5px;">{{ cart_count }}</span> {% endif %}
             </a>
-            <a href="#" class="nav-link active">
-                <img src="/static/img/icoreportes.png" alt="Reportes">
+            <a href="/pedidos" class="nav-link active">
+                <img src="/static/img/icoreportes.png" alt="Pedidos">
                 Mis Pedidos
             </a>
         </nav>
@@ -46,8 +47,8 @@
 
     <main class="dashboard-container">
         <section class="page-header">
-            <h2>Control de Pedidos</h2>
-            <p>Historiadl de peidos</p>
+            <h2>Mi Historial de Compras</h2>
+            <p>Revisa el estatus, monto y detalles de todos tus pedidos recientes.</p>
         </section>
 
         <section class="filters-bar">
@@ -112,7 +113,13 @@
                             {% endfor %}
                         {% else %}
                             <tr>
-                                <td colspan="5" class="text-center font-bold" style="padding: 2rem;">No has realizado ningún pedido aún.</td>
+                                <td colspan="5" class="text-center font-bold" style="padding: 4rem;">
+                                    <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                                        <img src="/static/img/icoordenesn.png" alt="Empty" style="width: 48px; opacity: 0.5;">
+                                        <p style="font-size: 18px;">Aún no tienes historial de compras.</p>
+                                        <a href="/catalogo" class="btn-primary" style="margin-top: 10px; display: inline-block;">Explorar Catálogo</a>
+                                    </div>
+                                </td>
                             </tr>
                         {% endif %}
                     </tbody>
@@ -120,7 +127,7 @@
             </div>
 
             <div class="pagination">
-                <p>Mostrando <span class="text-blue-link">1</span> a <span class="text-blue-link">5</span> de <span class="text-blue-link">100</span> resultados</p>
+                <p>Mostrando <span class="text-blue-link">1</span> a <span class="text-blue-link">{{ pedidos|length if pedidos else 0 }}</span> de <span class="text-blue-link">{{ pedidos|length if pedidos else 0 }}</span> resultados</p>
                 <div class="pagination-controls">
                     <button class="page-btn"><img src="/static/img/icoizquierda.png" alt="Prev"></button>
                     <button class="page-btn"><img src="/static/img/icoderecha.png" alt="Next"></button>

@@ -4,17 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MACUIN - Registro de Usuario</title>
-    <link rel="stylesheet" href="/Flask/frontend/static/css/registro.css">
+    <link rel="stylesheet" href="/static/css/registro.css">
 </head>
 <body class="reg-body">
+    {% include 'toasts.html' %}
 
     <div class="main-container">
         <div class="left-panel">
-            <a href="/Flask/frontend/templates/login.html" class="btn-back">
+            <a href="/login" class="btn-back">
                 <span class="arrow">←</span> Volver al inicio
             </a>
             <div class="side-branding">
-                <img src="/Flask/frontend/static/img/LOGO.png" alt="Logo" class="mini-logo">
+                <img src="/static/img/LOGO.png" alt="Logo" class="mini-logo">
                 <p>Excelencia en el Servicio</p>
             </div>
         </div>
@@ -25,25 +26,22 @@
                     <h2>Crea una cuenta</h2>
                 </div>
 
-                <form class="reg-form">
+
+
+                <form class="reg-form" action="/registro" method="POST">
                     <div class="input-group">
                         <label>Nombre Completo</label>
-                        <input type="text" placeholder="Ej. Juan Pérez" required>
+                        <input type="text" name="nombre" placeholder="Ej. Juan Pérez" required>
                     </div>
 
                     <div class="input-group">
                         <label>Email Corporativo</label>
-                        <input type="email" placeholder="usuario@macuin.com" required>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Confirmar Email</label>
-                        <input type="email" placeholder="Repite tu email" required>
+                        <input type="email" name="email" placeholder="usuario@macuin.com" required>
                     </div>
 
                     <div class="input-group">
                         <label>Contraseña</label>
-                        <input type="password" placeholder="••••••••" required>
+                        <input type="password" name="password" placeholder="••••••••" required minlength="6">
                     </div>
 
                     <div class="terms-container">

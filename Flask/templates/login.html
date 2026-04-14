@@ -5,17 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> MACUIN - Login </title>
-    <link rel="stylesheet" href="/Flask/frontend/static/css/login.css">
+    <link rel="stylesheet" href="/static/css/login.css">
 </head>
 <body class="login-body">
+    {% include 'toasts.html' %}
 
     <div class="login-layout">
-        <div class="login-hero" style="background-image: url('/Flask/frontend/static/img/loginbacground.png');">
+        <div class="login-hero" style="background-image: url('/static/img/loginbacground.png');">
             <div class="hero-overlay"></div>
             
             <div class="hero-content">
                 <div class="hero-logo">
-                    <img src="/Flask/frontend/static/img/LOGO.png" alt="M Logo" class="logo-square">
+                    <img src="/static/img/LOGO.png" alt="M Logo" class="logo-square">
                     <span class="logo-text-large">MACUIN</span>
                 </div>
 
@@ -30,7 +31,7 @@
                 </div>
 
                 <div class="hero-footer">
-                    <img src="/Flask/frontend/static/img/iconose.png" alt="Shield">
+                    <img src="/static/img/iconose.png" alt="Shield">
                     <span>Administración del Personal Autorizado</span>
                 </div>
             </div>
@@ -39,33 +40,35 @@
         <div class="login-form-section">
             <div class="login-card">
                 <div class="card-header">
-                    <img src="/Flask/frontend/static/img/casita.png" alt="Portal" class="portal-icon">
+                    <img src="/static/img/casita.png" alt="Portal" class="portal-icon">
                     <h2 class="portal-title">Bienvenido</h2>
                 </div>
                 
                 <div class="card-body">
                     <p class="welcome-subtitle">Ingresa tus credenciales para iniciar sesión</p>
                     
-                    <form class="login-form">
+
+
+                    <form class="login-form" action="/login" method="POST">
                         <div class="form-group">
                             <label class="input-label">
-                                <img src="/Flask/frontend/static/img/mensaje.png" alt="Email" class="label-icon">
+                                <img src="/static/img/mensaje.png" alt="Email" class="label-icon">
                                 Email
                             </label>
-                            <input type="email" placeholder="tunombre@macuin.com" class="input-light-gray">
+                            <input type="email" name="email" placeholder="tunombre@macuin.com" class="input-light-gray">
                         </div>
                         
                         <div class="form-group">
                             <div class="label-row flex-between">
                                 <label class="input-label">
-                                    <img src="/Flask/frontend/static/img/candado.png" alt="Lock" class="label-icon">
+                                    <img src="/static/img/candado.png" alt="Lock" class="label-icon">
                                     Contraseña
                                 </label>
                                 <a href="#" class="forgot-password">Olvidaste tu contraseña?</a>
                             </div>
                             <div class="input-with-icon">
-                                <input type="password" placeholder="••••••••••••" class="input-light-gray">
-                                <img src="/Flask/frontend/static/img/elojo.png" alt="Show" class="input-icon-right">
+                                <input type="password" name="password" placeholder="••••••••••••" class="input-light-gray">
+                                <img src="/static/img/elojo.png" alt="Show" class="input-icon-right">
                             </div>
                         </div>
                         
@@ -75,7 +78,7 @@
                         </div>
                         <div class="button-group">
                             <button type="submit" class="btn-primary btn-block btn-large">Iniciar Sesión</button>
-                            <button type="button" class="btn-outline btn-block btn-large">Registrarse</button>
+                            <a href="/registro" class="btn-outline btn-block btn-large" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">Registrarse</a>
                         </div>
                         
                     </form>

@@ -1,0 +1,72 @@
+<style>
+    .toast-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        pointer-events: none;
+    }
+    .toast {
+        background: #1F2937;
+        color: white;
+        border-radius: 8px;
+        padding: 15px 20px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        min-width: 250px;
+        max-width: 350px;
+        transform: translateX(120%);
+        animation: slideInToast 0.4s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        pointer-events: auto;
+    }
+    .toast.hide {
+        animation: fadeOutToast 0.4s forwards;
+    }
+    .toast-success { border-left: 5px solid #10B981; }
+    .toast-error { border-left: 5px solid #EF4444; }
+    .toast-icon { font-size: 20px; }
+    .toast-success .toast-icon { color: #10B981; }
+    .toast-error .toast-icon { color: #EF4444; }
+
+    @keyframes slideInToast {
+        to { transform: translateX(0); }
+    }
+    @keyframes fadeOutToast {
+        to { opacity: 0; transform: perspective(500px) translateZ(-50px) translateY(-20px); }
+    }
+</style>
+
+<div class="toast-container" id="toast-container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="toast toast-{{ category }}">
+                    <span class="toast-icon">
+                        {% if category == 'success' %}✓{% else %}!{% endif %}
+                    </span>
+                    <div style="flex-grow: 1; font-size: 14px; font-weight: bold; line-height: 1.4;">
+                        {{ message }}
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const toasts = document.querySelectorAll('.toast');
+        toasts.forEach((toast, index) => {
+            // Destruir despues de 4 segundos, escalando si hay múltiples
+            setTimeout(() => {
+                toast.classList.add('hide');
+                setTimeout(() => toast.remove(), 400); 
+            }, 4000 + (index * 500));
+        });
+    });
+</script>
