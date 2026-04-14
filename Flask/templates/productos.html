@@ -11,7 +11,7 @@
     <div class="edit-grid">
         <div class="col-left">
             <div class="panel text-center">
-                <div class="image-preview-box">
+                <div class="image-preview-box" style="min-height: 80px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.02); border-radius: 20px; position: relative;">
                     {% if producto.stock_disponible == 0 %}
                         <span class="status-badge outline-red position-badge">
                             <i class="bi bi-x-circle-fill"></i> Sin Stock
@@ -25,7 +25,6 @@
                             <i class="bi bi-check-circle-fill"></i> Stock: {{ producto.stock_disponible }}
                         </span>
                     {% endif %}
-                    <img src="/static/img/icoautoparte.png" alt="{{ producto.nombre }}" class="product-image-large">
                 </div>
                 
                 <div class="info-cards-container">

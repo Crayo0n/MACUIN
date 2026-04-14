@@ -293,8 +293,9 @@ def pedidos():
         return redirect(url_for('login'))
         
     try:
-        # Obtener pedidos
-        resp = requests.get(f"{API_URL}/v1/pedidos/", timeout=5)
+        # Obtener pedidos filtrados por el usuario logueado (Seguridad)
+        user_id = session['usuario']['id']
+        resp = requests.get(f"{API_URL}/v1/pedidos/", params={"usuario_id": user_id}, timeout=5)
         if resp.status_code == 200:
             mis_pedidos = resp.json()
             

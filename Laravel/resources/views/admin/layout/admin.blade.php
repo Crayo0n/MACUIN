@@ -8,6 +8,12 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Motores de Exportación (Rúbrica) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -83,12 +89,11 @@
             
             <a href="/ordenes" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all {{ Request::is('*ordenes*') ? 'bg-brand-600 text-white shadow-lg shadow-brand-500/20' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' }}">
                 <i class="fa-solid fa-clipboard-list w-5"></i>
-                <span class="font-medium">Órdenes Activas</span>
-                <span class="ml-auto bg-brand-500/20 text-brand-300 py-0.5 px-2 rounded-full text-xs font-bold border border-brand-500/30">5</span>
+                <span class="font-medium">Órdenes</span>
             </a>
 
             <div class="pt-6 pb-2">
-                <p class="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider border-t border-dark-border/30 pt-4">Análisis e Inteligencia</p>
+                <p class="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider border-t border-dark-border/30 pt-4">Reportes</p>
             </div>
 
             <a href="/admin/reportes/ventas" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all {{ Request::is('*ventas*') ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' }}">
@@ -103,7 +108,7 @@
 
             <a href="/admin/reportes/usuarios" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all {{ Request::is('*usuarios*') ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' }}">
                 <i class="fa-solid fa-users w-5"></i>
-                <span class="font-medium">Gestión Usuarios</span>
+                <span class="font-medium">Reporte Clientes</span>
             </a>
         </nav>
 

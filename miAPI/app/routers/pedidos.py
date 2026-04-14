@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from typing import List
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from app.data.database import get_db
 from app.models.pedido_model import Pedido, DetallePedido, PedidoStatusEnum
 from app.models.autoparte_model import Autoparte
@@ -9,12 +9,21 @@ from app.schemas.pedido import PedidoCreate, PedidoUpdate, PedidoOut
 router = APIRouter(prefix="/v1/pedidos", tags=["Pedidos"])
 
 @router.get("/", response_model=List[PedidoOut])
-async def listar_pedidos(db: Session = Depends(get_db)):
-    return db.query(Pedido).all()
+async def listar_pedidos(usuario_id: int = None, db: Session = Depends(get_db)):
+    query = db.query(Pedido).options(
+        joinedload(Pedido.detalles).joinedload(DetallePedido.autoparte)
+    )
+    
+    if usuario_id:
+        query = query.filter(Pedido.usuario_id == usuario_id)
+        
+    return query.all()
 
 @router.get("/{id}", response_model=PedidoOut)
 async def obtener_pedido(id: int, db: Session = Depends(get_db)):
-    pedido = db.query(Pedido).filter(Pedido.id == id).first()
+    pedido = db.query(Pedido).options(
+        joinedload(Pedido.detalles).joinedload(DetallePedido.autoparte)
+    ).filter(Pedido.id == id).first()
     if not pedido:
         raise HTTPException(status_code=404, detail="Pedido no encontrado")
     return pedido

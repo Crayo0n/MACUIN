@@ -69,18 +69,29 @@ class InventarioController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->all();
+        $imageName = null;
 
-        // Manejo de Imagen
+        // Manejo de Imagen Física
         if ($request->hasFile('imagen_file')) {
             $image = $request->file('imagen_file');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('images/autopartes'), $imageName);
-            $data['imagen'] = $imageName;
         }
 
+        // Construcción Explícita del Body para la API
+        $payload = [
+            'categoria_id'     => (int) $request->categoria_id,
+            'nombre'           => $request->nombre,
+            'descripcion'      => $request->descripcion,
+            'sku'              => $request->sku,
+            'marca'            => $request->marca,
+            'precio'           => (float) $request->precio,
+            'stock_disponible' => (int) $request->stock_disponible,
+            'imagen'           => $imageName // Enviar el nombre del archivo o null
+        ];
+
         try {
-            $response = Http::post($this->apiUrl . '/v1/autopartes/', $data);
+            $response = Http::post($this->apiUrl . '/v1/autopartes/', $payload);
             
             if ($response->successful()) {
                 return redirect('/inventario')->with('success', 'Producto creado exitosamente');
@@ -111,30 +122,44 @@ class InventarioController extends Controller
 
     public function update(Request $request, $id)
     {
-        $data = $request->all();
+        try {
+            // 1. Obtener datos actuales del producto desde la API
+            $currentRes = Http::get($this->apiUrl . '/v1/autopartes/' . $id);
+            if (!$currentRes->successful()) {
+                return back()->with('error', 'No se pudo obtener el producto para actualizar');
+            }
+            $currentData = $currentRes->json();
+            $imageName = $currentData['imagen'] ?? null;
 
-        // Manejo de Imagen
-        if ($request->hasFile('imagen_file')) {
-            // 1. Obtener producto actual para borrar imagen vieja
-            try {
-                $curr = Http::get($this->apiUrl . '/v1/autopartes/' . $id)->json();
-                if (!empty($curr['imagen'])) {
-                    $oldPath = public_path('images/autopartes/' . $curr['imagen']);
+            // 2. Si hay nueva imagen, procesarla
+            if ($request->hasFile('imagen_file')) {
+                // Borrar vieja si existe
+                if (!empty($imageName)) {
+                    $oldPath = public_path('images/autopartes/' . $imageName);
                     if (file_exists($oldPath)) {
-                        unlink($oldPath);
+                        @unlink($oldPath);
                     }
                 }
-            } catch (\Exception $e) {}
 
-            // 2. Guardar nueva
-            $image = $request->file('imagen_file');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images/autopartes'), $imageName);
-            $data['imagen'] = $imageName;
-        }
+                // Guardar nueva
+                $image = $request->file('imagen_file');
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('images/autopartes'), $imageName);
+            }
 
-        try {
-            $response = Http::put($this->apiUrl . '/v1/autopartes/' . $id, $data);
+            // 3. Construcción Explícita del Body
+            $payload = [
+                'categoria_id'     => (int) $request->categoria_id,
+                'nombre'           => $request->nombre,
+                'descripcion'      => $request->descripcion,
+                'sku'              => $request->sku,
+                'marca'            => $request->marca,
+                'precio'           => (float) $request->precio,
+                'stock_disponible' => (int) $request->stock_disponible,
+                'imagen'           => $imageName
+            ];
+
+            $response = Http::put($this->apiUrl . '/v1/autopartes/' . $id, $payload);
             
             if ($response->successful()) {
                 return redirect('/inventario')->with('success', 'Producto actualizado correctamente');

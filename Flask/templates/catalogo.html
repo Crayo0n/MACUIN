@@ -39,7 +39,7 @@
         {% if autopartes %}
             {% for ap in autopartes %}
             <div class="product-card" data-nombre="{{ ap.nombre|lower }}" data-cat="{{ ap.categoria_id }}">
-                <div class="product-image-wrapper">
+                <div class="product-image-wrapper" style="height: auto; min-height: 40px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.02); border-radius: 12px; margin-bottom: 15px;">
                     {% if ap.stock_disponible == 0 %}
                         <span class="stock-pill stock-out">Agotado</span>
                     {% elif ap.stock_disponible <= 5 %}
@@ -47,7 +47,6 @@
                     {% else %}
                         <span class="stock-pill">{{ ap.stock_disponible }} Stock</span>
                     {% endif %}
-                    <img src="/static/img/icoautoparte.png" alt="Autoparte" />
                 </div>
                 <div class="product-info">
                     <h3 class="product-title">{{ ap.nombre }}</h3>

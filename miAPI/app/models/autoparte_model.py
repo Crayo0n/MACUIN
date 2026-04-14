@@ -11,8 +11,10 @@ class Autoparte(Base):
     nombre = Column(String, nullable=False, index=True)
     descripcion = Column(String)
     sku = Column(String, unique=True, index=True, nullable=False)
+    marca = Column(String, nullable=True)
     precio = Column(Float, nullable=False)
     stock_disponible = Column(Integer, default=0, nullable=False)
+    imagen = Column(String, nullable=True)
     fecha_creacion = Column(DateTime, default=datetime.utcnow)
 
     # Relaciones
