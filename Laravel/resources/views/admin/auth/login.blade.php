@@ -40,14 +40,36 @@
                 </div>
 
                 <div class="login-card-body">
-                    <form action="#" method="POST">
+                    @if($errors->any())
+                        <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #ef4444; padding: 12px; border-radius: 8px; font-size: 11px; margin-bottom: 20px;">
+                            <ul style="list-style: none; padding: 0; margin: 0;">
+                                @foreach ($errors->all() as $error)
+                                    <li><i class="fa-solid fa-circle-exclamation mr-2"></i> {{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    @if(session('error'))
+                        <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #ef4444; padding: 12px; border-radius: 8px; font-size: 11px; margin-bottom: 20px; text-align: center;">
+                            <i class="fa-solid fa-circle-exclamation mr-2"></i> {{ session('error') }}
+                        </div>
+                    @endif
+                    
+                    @if(session('success'))
+                        <div style="background: rgba(34, 197, 94, 0.15); border: 1px solid #22c55e; color: #22c55e; padding: 12px; border-radius: 8px; font-size: 11px; margin-bottom: 20px; text-align: center;">
+                            <i class="fa-solid fa-circle-check mr-2"></i> {{ session('success') }}
+                        </div>
+                    @endif
+
+                    <form action="/login" method="POST">
                         @csrf
                         <div class="form-group">
                             <label class="input-label">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                                 Correo Electrónico
                             </label>
-                            <input type="email" class="input" placeholder="tu.correo@macuin.com" required>
+                            <input type="email" name="email" class="input" placeholder="tu.correo@macuin.com" value="{{ old('email') }}">
                         </div>
 
                         <div class="form-group">
@@ -56,21 +78,10 @@
                                 Contraseña
                             </label>
                             <div style="position: relative;">
-                                <input type="password" class="input" placeholder="••••••••" required>
-                                <button type="button" style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); opacity: 0.5;">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></circle></svg>
-                                </button>
+                                <input type="password" name="password" class="input" placeholder="••••••••">
                             </div>
                         </div>
-
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px;">
-                            <label style="display: flex; align-items: center; gap: 8px; font-family: var(--font-display); font-size: 11px; color: white;">
-                                <input type="checkbox" style="accent-color: var(--color-primary);"> Recordarme
-                            </label>
-                            <a href="#" style="font-family: var(--font-display); font-size: 11px; color: var(--color-logo-bg);">Olvidé mi contraseña</a>
-                        </div>
-
-                        <button type="submit" class="btn-login">Ingresar</button>
+                        <button type="submit" class="btn-login">Ingresar al Panel</button>
                     </form>
                 </div>
             </div>

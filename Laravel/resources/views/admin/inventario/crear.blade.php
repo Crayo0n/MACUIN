@@ -29,7 +29,7 @@
 @endpush
 
 @section('content')
-    <form action="/inventario/store" method="POST">
+    <form action="/inventario/store" method="POST" enctype="multipart/form-data">
         @csrf
         <div style="display: flex; justify-content: flex-end; gap: 12px; margin-bottom: 20px;">
             <a href="/inventario" class="bg-slate-800 hover:bg-slate-700 text-white px-6 py-2.5 rounded-xl font-bold transition-all border border-slate-700">Cancelar</a>
@@ -40,6 +40,24 @@
 
         <div class="form-card">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Image Upload Section -->
+                <div class="md:col-span-2">
+                    <label class="field-label">Imagen del Producto</label>
+                    <div class="flex flex-col md:flex-row gap-6 items-center bg-slate-800/30 p-6 rounded-2xl border border-dashed border-slate-700">
+                        <div id="image-preview-container" class="w-32 h-32 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center overflow-hidden flex-shrink-0">
+                            <i id="placeholder-icon" class="fa-solid fa-image text-3xl text-slate-700"></i>
+                            <img id="image-preview" src="#" alt="Preview" class="w-full h-full object-cover hidden">
+                        </div>
+                        <div class="flex-grow">
+                            <p class="text-xs text-slate-400 mb-3">Sube una imagen clara de la pieza para facilitar su identificación en el inventario. Formatos aceptados: JPG, PNG, WEBP.</p>
+                            <input type="file" name="imagen_file" id="imagen_input" class="hidden" accept="image/*" onchange="previewImage(this)">
+                            <button type="button" onclick="document.getElementById('imagen_input').click()" class="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-lg text-xs font-bold border border-slate-600 transition-colors">
+                                <i class="fa-solid fa-cloud-arrow-up mr-2"></i> Seleccionar Imagen
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="md:col-span-2">
                     <label class="field-label" for="nombre">Nombre de Parte</label>
                     <input id="nombre" name="nombre" type="text" class="input" placeholder="e.g. Batería de 12 V" required>
@@ -56,10 +74,9 @@
                 <div>
                     <label class="field-label" for="categoria">Categoría</label>
                     <select id="categoria" name="categoria_id" class="input">
-                        <option value="1">Motor</option>
-                        <option value="2">Frenos</option>
-                        <option value="3">Eléctrico</option>
-                        <option value="4">Filtros</option>
+                        @foreach($categorias as $cat)
+                            <option value="{{ $cat['id'] }}">{{ $cat['nombre'] }}</option>
+                        @endforeach
                     </select>
                 </div>
 
@@ -91,6 +108,20 @@
         function generateSKU() {
             const random = Math.floor(Math.random() * 100000);
             document.getElementById('sku').value = 'AP-' + random;
+        }
+
+        function previewImage(input) {
+            const preview = document.getElementById('image-preview');
+            const icon = document.getElementById('placeholder-icon');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.classList.remove('hidden');
+                    icon.classList.add('hidden');
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
         }
     </script>
     @endpush

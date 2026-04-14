@@ -74,13 +74,8 @@
 
         <!-- Navigation -->
         <nav class="flex-grow py-6 px-4 space-y-1 overflow-y-auto">
-            <p class="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Operaciones (Dashboard)</p>
+            <p class="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Operaciones</p>
             
-            <a href="/admin" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all {{ Request::is('admin') ? 'bg-brand-600 text-white shadow-lg shadow-brand-500/20' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' }}">
-                <i class="fa-solid fa-gauge-high w-5"></i>
-                <span class="font-medium">Vista General</span>
-            </a>
-
             <a href="/inventario" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all {{ Request::is('*inventario*') ? 'bg-brand-600 text-white shadow-lg shadow-brand-500/20' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' }}">
                 <i class="fa-solid fa-boxes-stacked w-5"></i>
                 <span class="font-medium">Inventario</span>
@@ -102,8 +97,8 @@
             </a>
 
             <a href="/admin/reportes/pedidos" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all {{ Request::is('*pedidos*') ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' }}">
-                <i class="fa-solid fa-box-open w-5"></i>
-                <span class="font-medium">Historial Pedidos</span>
+                <i class="fa-solid fa-file-invoice-dollar w-5"></i>
+                <span class="font-medium">Reporte Pedidos</span>
             </a>
 
             <a href="/admin/reportes/usuarios" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all {{ Request::is('*usuarios*') ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' }}">

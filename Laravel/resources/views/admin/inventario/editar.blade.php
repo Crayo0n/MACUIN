@@ -7,197 +7,111 @@
 
 @push('styles')
 <style>
-    .edit-grid {
-        display: grid;
-        grid-template-columns: 1.8fr 1fr; 
-        gap: 24px;
-        align-items: start;
+    .form-card {
+        background-color: #111827;
+        border-radius: 12px;
+        border: 1px solid rgba(255,255,255,0.07);
+        padding: 32px 40px 40px;
     }
-
-    .form-section-card {
-        background-color: #1e1e1e;
-        border-radius: var(--radius-lg);
-        padding: 24px;
-        margin-bottom: 24px;
-        border: 0.5px solid var(--color-border);
-    }
-
-    .section-title {
-        font-family: var(--font-display);
-        font-size: 20px;
-        margin-bottom: 20px;
-        color: white;
-    }
-
-    .history-table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 12px;
-    }
-    .history-table th {
-        text-align: left;
-        color: var(--color-muted);
-        padding: 8px;
-        border-bottom: 1px solid var(--color-border);
-    }
-    .history-table td {
-        padding: 12px 8px;
-        border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .switch-wrap {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        font-family: var(--font-display);
-        font-size: 13px;
-    }
-
-    .switch {
-        position: relative;
-        display: inline-block;
-        width: 44px;
-        height: 22px;
-    }
-
-    .switch input { opacity: 0; width: 0; height: 0; }
-
-    .slider {
-        position: absolute; 
-        cursor: pointer; 
-        inset: 0;
-        background-color: #333; 
-        transition: .4s; 
-        border-radius: 22px;
-    }
-
-    .slider:before {
-        position: absolute; content: ""; 
-        height: 16px; width: 16px;
-        left: 3px; 
-        bottom: 3px; 
-        background-color: white; 
-        transition: .4s; 
-        border-radius: 50%;
-    }
-
-    input:checked + .slider { background-color: var(--color-primary); }
-    input:checked + .slider:before { transform: translateX(22px); }
+    .field-label { display: block; font-size: 13px; font-weight: 600; color: #9CA3AF; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .input { width: 100%; background: rgba(31, 41, 55, 0.5); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 12px; color: white; transition: 0.2s; }
+    .input:focus { outline: none; border-color: #3b82f6; background: rgba(31, 41, 55, 0.8); }
 </style>
 @endpush
 
 @section('content')
-    <div style="display: flex; justify-content: flex-end; gap: 12px; margin-bottom: 20px;">
-        <button class="btn btn-secondary" style="border-radius: 25px; padding: 10px 30px;">Descartar Cambios</button>
-        <button class="btn btn-primary" style="border-radius: 25px; padding: 10px 30px;">Actualizar Producto</button>
-    </div>
-
-    <div class="edit-grid">
+    <form action="/inventario/update/{{ $producto['id'] }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
         
-        <div class="col-main">
-            
-            <div class="form-section-card">
-                <h3 class="section-title">Información General</h3>
-                
-                <div class="form-group" style="margin-bottom: 20px;">
-                    <label class="field-label">Nombre de Parte</label>
-                    <input type="text" class="input" value="Alternador remanufacturado duralast dl11385">
+        <div style="display: flex; justify-content: flex-end; gap: 12px; margin-bottom: 20px;">
+            <a href="/inventario" class="bg-slate-800 hover:bg-slate-700 text-white px-6 py-2.5 rounded-xl font-bold transition-all border border-slate-700">Descartar</a>
+            <button type="submit" class="bg-brand-600 hover:bg-brand-500 text-white px-8 py-2.5 rounded-xl font-bold transition-all shadow-lg shadow-brand-500/20 flex items-center gap-2 transform hover:-translate-y-0.5">
+                <i class="fa-solid fa-arrows-rotate"></i> Actualizar Producto
+            </button>
+        </div>
+
+        <div class="form-card">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Image Management Section -->
+                <div class="md:col-span-2">
+                    <label class="field-label">Imagen de la Parte</label>
+                    <div class="flex flex-col md:flex-row gap-6 items-center bg-slate-800/30 p-6 rounded-2xl border border-dashed border-slate-700">
+                        <div id="image-preview-container" class="w-32 h-32 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center overflow-hidden flex-shrink-0">
+                            @if(!empty($producto['imagen']))
+                                <img id="image-preview" src="{{ asset('images/autopartes/' . $producto['imagen']) }}" alt="Preview" class="w-full h-full object-cover">
+                            @else
+                                <i id="placeholder-icon" class="fa-solid fa-image text-3xl text-slate-700"></i>
+                                <img id="image-preview" src="#" alt="Preview" class="w-full h-full object-cover hidden">
+                            @endif
+                        </div>
+                        <div class="flex-grow">
+                            <p class="text-xs text-slate-400 mb-3">Sube una nueva imagen para reemplazar la actual. Formatos aceptados: JPG, PNG, WEBP.</p>
+                            <input type="file" name="imagen_file" id="imagen_input" class="hidden" accept="image/*" onchange="previewImage(this)">
+                            <button type="button" onclick="document.getElementById('imagen_input').click()" class="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-lg text-xs font-bold border border-slate-600 transition-colors">
+                                <i class="fa-solid fa-cloud-arrow-up mr-2"></i> Cambiar Imagen
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
-                    <div>
-                        <label class="field-label">SKU</label>
-                        <input type="text" class="input" value="BP-F-2024-C">
-                    </div>
-                    <div>
-                        <label class="field-label">Categoría</label>
-                        <select class="input" style="appearance: none;">
-                            <option selected>Alternadores</option>
-                        </select>
-                    </div>
+                <div class="md:col-span-2">
+                    <label class="field-label" for="nombre">Nombre de Parte</label>
+                    <input id="nombre" name="nombre" type="text" class="input" value="{{ $producto['nombre'] }}" required>
                 </div>
 
                 <div>
-                    <label class="field-label">Descripción</label>
-                    <textarea class="input" style="min-height: 100px; font-size: 12px; line-height: 1.5;">Los alternadores Duralast se remanufacturan para garantizar un rendimiento confiable, reemplazando todos los componentes de desgaste...</textarea>
+                    <label class="field-label" for="sku">SKU código</label>
+                    <input id="sku" name="sku" type="text" class="input" value="{{ $producto['sku'] }}" required>
                 </div>
-            </div>
 
-            <div class="form-section-card">
-                <h3 class="section-title">Precio e inventario</h3>
+                <div>
+                    <label class="field-label" for="categoria">Categoría</label>
+                    <select id="categoria" name="categoria_id" class="input">
+                        @foreach($categorias as $cat)
+                            <option value="{{ $cat['id'] }}" {{ $producto['categoria_id'] == $cat['id'] ? 'selected' : '' }}>{{ $cat['nombre'] }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div>
+                    <label class="field-label" for="precio">Precio Unitario ($)</label>
+                    <input id="precio" name="precio" type="number" step="0.01" class="input" value="{{ $producto['precio'] }}" required>
+                </div>
+
+                <div>
+                    <label class="field-label" for="stock">Stock Actual</label>
+                    <input id="stock" name="stock_disponible" type="number" class="input" value="{{ $producto['stock_disponible'] }}" required>
+                </div>
+
+                <div class="md:col-span-2">
+                    <label class="field-label" for="descripcion">Descripción</label>
+                    <textarea id="descripcion" name="descripcion" class="input" style="min-height: 110px;">{{ $producto['descripcion'] }}</textarea>
+                </div>
                 
-                <div style="margin-bottom: 30px;">
-                    <label class="field-label">Precio Unitario</label>
-                    <input type="text" class="input" value="$45.00" style="max-width: 300px;">
-                </div>
-
-                <hr style="border: none; border-top: 1px solid var(--color-border); margin-bottom: 25px;">
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; align-items: end;">
-                    <div>
-                        <label class="field-label">Stock Actual</label>
-                        <input type="number" class="input" value="124">
-                    </div>
-                    <div>
-                        <label class="field-label">Alerta de Stock Bajo</label>
-                        <input type="number" class="input" value="20">
-                    </div>
-                    <div class="switch-wrap" style="padding-bottom: 12px;">
-                        <label class="switch">
-                            <input type="checkbox" checked>
-                            <span class="slider"></span>
-                        </label>
-                        <span>Disponible para Venta</span>
-                    </div>
+                <div>
+                  <label class="field-label" for="marca">Marca</label>
+                  <input id="marca" name="marca" type="text" class="input" value="{{ $producto['marca'] ?? '' }}" placeholder="e.g. Bosch, Brembo...">
                 </div>
             </div>
-
         </div>
+    </form>
 
-        <div class="col-side">
-            
-            <div class="form-section-card" style="text-align: center;">
-                <h3 class="section-title" style="text-align: left;">Imagen del Producto</h3>
-                <div style="background: white; border-radius: 12px; padding: 20px; margin-bottom: 15px;">
-                    <img src="{{ asset('images/alternador.jpg') }}" alt="Alternador" style="width: 100%; height: auto; object-fit: contain;">
-                </div>
-                <p style="font-size: 10px; color: var(--color-muted); margin-bottom: 15px;">SVG, PNG, JPG (MAX 800 x 400 px)</p>
-                <div style="display: flex; gap: 10px; justify-content: center;">
-                    <button class="btn btn-primary" style="font-size: 11px; padding: 8px 20px;">Cambiar</button>
-                    <button class="btn btn-danger" style="font-size: 11px; padding: 8px 20px;">Remover</button>
-                </div>
-            </div>
-
-            <div class="form-section-card">
-                <h3 class="section-title">Historial de Stock</h3>
-                <table class="history-table">
-                    <thead>
-                        <tr>
-                            <th>Fecha</th>
-                            <th>Acción</th>
-                            <th>Cambio</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>12 Enero de 2026, 9:30 AM</td>
-                            <td><span class="badge badge-success">Restock</span></td>
-                            <td style="color: #22c55e;">+50</td>
-                        </tr>
-                        <tr>
-                            <td>12 Enero de 2026, 9:30 AM</td>
-                            <td><span class="badge badge-warning">Corrección</span></td>
-                            <td style="color: #eab308;">-3</td>
-                        </tr>
-                        <tr>
-                            <td>12 Enero de 2026, 9:30 AM</td>
-                            <td><span class="badge badge-info">Venta</span></td>
-                            <td style="color: var(--color-primary);">-1</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
-    </div>
+    @push('scripts')
+    <script>
+        function previewImage(input) {
+            const preview = document.getElementById('image-preview');
+            const icon = document.getElementById('placeholder-icon');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.classList.remove('hidden');
+                    if(icon) icon.classList.add('hidden');
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+    @endpush
 @endsection
