@@ -21,3 +21,7 @@ class Usuario(UsuarioBase):
     fecha_creacion: datetime
     class Config:
         from_attributes = True
+
+class UsuarioLogin(BaseModel):
+    email: EmailStr
+    password: str

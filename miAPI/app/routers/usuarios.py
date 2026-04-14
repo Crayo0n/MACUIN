@@ -3,7 +3,7 @@ from typing import List
 from sqlalchemy.orm import Session
 from app.data.database import get_db
 
-from app.schemas.usuario import Usuario, UsuarioCreate, UsuarioUpdate
+from app.schemas.usuario import Usuario, UsuarioCreate, UsuarioUpdate, UsuarioLogin
 from app.models.user_model import User, RoleEnum
 # asumiendo que verificar_credenciales existe o es opcional temporalmente
 # from app.security.auth import verificar_credenciales
@@ -29,6 +29,20 @@ async def obtener_usuario(id: int, db: Session = Depends(get_db)):
     usuario = db.query(User).filter(User.id == id).first()
     if not usuario:
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
+    return usuario
+
+@router.post("/login", response_model=Usuario)
+async def login_api(data: UsuarioLogin, db: Session = Depends(get_db)):
+    """Valida credenciales y devuelve el usuario si son correctas (Login Seguro)"""
+    usuario = db.query(User).filter(User.email == data.email).first()
+    if not usuario:
+        raise HTTPException(status_code=401, detail="Credenciales incorrectas")
+        
+    hash_enviado = hash_password(data.password)
+    # Por seguridad no devolvemos el password_hash en el json
+    if usuario.password_hash != hash_enviado:
+        raise HTTPException(status_code=401, detail="Credenciales incorrectas")
+        
     return usuario
 
 @router.post("/", response_model=Usuario, status_code=status.HTTP_201_CREATED)
